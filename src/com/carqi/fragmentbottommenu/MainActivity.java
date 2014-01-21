@@ -1,4 +1,6 @@
-package com.example.fragmentbottommenu;
+package com.carqi.fragmentbottommenu;
+
+import com.example.fragmentbottommenu.R;
 
 import android.app.Activity;
 import android.content.Intent;

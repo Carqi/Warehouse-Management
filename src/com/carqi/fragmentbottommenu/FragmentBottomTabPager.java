@@ -1,6 +1,8 @@
-package com.example.fragmentbottommenu;
+package com.carqi.fragmentbottommenu;
 
 import java.util.ArrayList;
+
+import com.example.fragmentbottommenu.R;
 
 import android.content.Context;
 import android.os.Bundle;

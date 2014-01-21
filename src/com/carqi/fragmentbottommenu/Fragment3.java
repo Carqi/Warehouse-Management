@@ -1,4 +1,6 @@
-package com.example.fragmentbottommenu;
+package com.carqi.fragmentbottommenu;
+
+import com.example.fragmentbottommenu.R;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -6,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class Fragment2 extends Fragment {
+public class Fragment3 extends Fragment {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -19,7 +21,7 @@ public class Fragment2 extends Fragment {
 			Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 //		return super.onCreateView(inflater, container, savedInstanceState);
-		return inflater.inflate(R.layout.fragment2, container, false);
+		return inflater.inflate(R.layout.fragment3, container, false);
 	}
 
 }
