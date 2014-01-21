@@ -1,6 +1,6 @@
 package com.carqi.fragmentbottommenu;
 
-import com.example.fragmentbottommenu.R;
+import com.carqi.fragmentbottommenu.R;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -16,6 +16,7 @@ public class FragmentBottomTab extends FragmentActivity  {
 	private FragmentTabHost mTabHost;
 	private RadioGroup mTabRg;
 
+	@SuppressWarnings("rawtypes")
 	private final Class[] fragments = { Fragment1.class, Fragment2.class,
 			Fragment3.class, Fragment4.class };
 

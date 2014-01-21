@@ -2,7 +2,7 @@ package com.carqi.fragmentbottommenu;
 
 import java.util.ArrayList;
 
-import com.example.fragmentbottommenu.R;
+import com.carqi.fragmentbottommenu.R;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -28,6 +28,7 @@ public class FragmentBottomTabPager extends FragmentActivity
 	private RadioGroup mTabRg;
 	private ViewPager mViewPage;
 	TabsAdapter mTabsAdapter;
+	@SuppressWarnings("rawtypes")
 	private final Class[] fragments = { Fragment1.class, Fragment2.class,
 			Fragment3.class, Fragment4.class };
 

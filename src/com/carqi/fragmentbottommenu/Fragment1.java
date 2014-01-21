@@ -1,8 +1,7 @@
 package com.carqi.fragmentbottommenu;
 
-import com.example.fragmentbottommenu.R;
+import com.carqi.fragmentbottommenu.R;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
