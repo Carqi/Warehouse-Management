@@ -22,7 +22,7 @@
             style="@style/tab_rb_style"
             android:checked="true"
             android:drawableTop="@drawable/tab_selector_weixing"
-            android:text="微信" 
+            android:text="@string/inventory" 
             />
 
         <RadioButton

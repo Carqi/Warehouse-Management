@@ -20,8 +20,7 @@ import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
 import android.widget.TabWidget;
 
-public class FragmentBottomTabPager extends FragmentActivity 
-		 {
+public class FragmentBottomTabPager extends FragmentActivity {
 
 	// 定义FragmentTabHost对象
 	private FragmentTabHost mTabHost;
@@ -29,8 +28,7 @@ public class FragmentBottomTabPager extends FragmentActivity
 	private ViewPager mViewPage;
 	TabsAdapter mTabsAdapter;
 	@SuppressWarnings("rawtypes")
-	private final Class[] fragments = { Fragment1.class, Fragment2.class,
-			Fragment3.class, Fragment4.class };
+	private final Class[] fragments = { InventoryFragment.class, Fragment2.class, Fragment3.class, Fragment4.class };
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -57,8 +55,7 @@ public class FragmentBottomTabPager extends FragmentActivity
 			// 将Tab按钮添加进Tab选项卡中
 			mTabHost.addTab(tabSpec, fragments[i], null);
 
-			mTabsAdapter.addTab(mTabHost.newTabSpec(i + "")
-					.setIndicator(i + ""), fragments[i], null);
+			mTabsAdapter.addTab(mTabHost.newTabSpec(i + "").setIndicator(i + ""), fragments[i], null);
 		}
 
 		mTabRg.setOnCheckedChangeListener(new OnCheckedChangeListener() {
@@ -96,7 +93,6 @@ public class FragmentBottomTabPager extends FragmentActivity
 		outState.putString("tab", mTabHost.getCurrentTabTag());
 	}
 
-
 	/**
 	 * This is a helper class that implements the management of tabs and all
 	 * details of connecting a ViewPager with associated TabHost. It relies on a
@@ -108,8 +104,8 @@ public class FragmentBottomTabPager extends FragmentActivity
 	 * switch to the correct paged in the ViewPager whenever the selected tab
 	 * changes.
 	 */
-	public static class TabsAdapter extends FragmentPagerAdapter implements
-			TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener {
+	public static class TabsAdapter extends FragmentPagerAdapter implements TabHost.OnTabChangeListener,
+			ViewPager.OnPageChangeListener {
 		private final Context mContext;
 		private final TabHost mTabHost;
 		private final ViewPager mViewPager;
@@ -144,8 +140,7 @@ public class FragmentBottomTabPager extends FragmentActivity
 			}
 		}
 
-		public TabsAdapter(FragmentActivity activity, TabHost tabHost,
-				ViewPager pager, RadioGroup tabRg) {
+		public TabsAdapter(FragmentActivity activity, TabHost tabHost, ViewPager pager, RadioGroup tabRg) {
 			super(activity.getSupportFragmentManager());
 			mContext = activity;
 			mTabHost = tabHost;
@@ -174,8 +169,7 @@ public class FragmentBottomTabPager extends FragmentActivity
 		@Override
 		public Fragment getItem(int position) {
 			TabInfo info = mTabs.get(position);
-			return Fragment.instantiate(mContext, info.clss.getName(),
-					info.args);
+			return Fragment.instantiate(mContext, info.clss.getName(), info.args);
 		}
 
 		@Override
@@ -186,8 +180,7 @@ public class FragmentBottomTabPager extends FragmentActivity
 		}
 
 		@Override
-		public void onPageScrolled(int position, float positionOffset,
-				int positionOffsetPixels) {
+		public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 		}
 
 		@Override
@@ -208,6 +201,5 @@ public class FragmentBottomTabPager extends FragmentActivity
 		public void onPageScrollStateChanged(int state) {
 		}
 	}
-
 
 }

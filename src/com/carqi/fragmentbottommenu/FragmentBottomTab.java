@@ -17,7 +17,7 @@ public class FragmentBottomTab extends FragmentActivity  {
 	private RadioGroup mTabRg;
 
 	@SuppressWarnings("rawtypes")
-	private final Class[] fragments = { Fragment1.class, Fragment2.class,
+	private final Class[] fragments = { InventoryFragment.class, Fragment2.class,
 			Fragment3.class, Fragment4.class };
 
 	@Override

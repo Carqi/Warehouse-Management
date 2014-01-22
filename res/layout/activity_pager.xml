@@ -22,7 +22,7 @@
             style="@style/tab_rb_style"
             android:checked="true"
             android:drawableTop="@drawable/tab_selector_weixing"
-            android:text="微信" />
+            android:text="@string/inventory" />
 
         <RadioButton
             android:id="@+id/tab_rb_2"
@@ -34,7 +34,7 @@
             android:id="@+id/tab_rb_3"
             style="@style/tab_rb_style"
             android:drawableTop="@drawable/tab_selector_faxian"
-            android:text="发现" />
+            android:text="@string/file" />
 
         <RadioButton
             android:id="@+id/tab_rb_4"
