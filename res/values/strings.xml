@@ -8,4 +8,18 @@
     <string name="inventory">库存</string>
     <string name="file">文件</string>
 
+    
+    <string-array name="status_codes">
+        <item>0=未知异常.</item>
+        <item>400=网络错误，请重试</item>
+        <item>403=网络错误，请重试</item>
+        <item>407=用户名或密码错误</item>
+        <item>500=您的账号已经再另一设备上登录</item>
+        <item>903=服务器异常</item>
+        <item>904=网络错误，请重试</item>
+        <item>905=网络错误，请检查网络连接</item>
+        <item>906=网络异常，请检查网络连接</item>
+        <item>909=输入非法地址，请检查地址是否正确</item>
+        <item>1024=登录超时，请重新登录</item>
+    </string-array>
 </resources>

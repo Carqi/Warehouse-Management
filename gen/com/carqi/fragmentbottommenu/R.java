@@ -17,6 +17,9 @@ public final class R {
         public static final int slide_out_to_bottom=0x7f040005;
         public static final int vote_anim=0x7f040006;
     }
+    public static final class array {
+        public static final int status_codes=0x7f080000;
+    }
     public static final class attr {
     }
     public static final class color {
@@ -290,29 +293,29 @@ public final class R {
         public static final int wallpaper=0x7f0200f0;
     }
     public static final class id {
-        public static final int LEFT_BUTTON=0x7f0a000f;
-        public static final int PROGRESS_BAR=0x7f0a0013;
-        public static final int RIGHT_BUTTON=0x7f0a0011;
-        public static final int RIGHT_TOW_BUTTON=0x7f0a0012;
-        public static final int TITLE_TEXT=0x7f0a0010;
-        public static final int action_settings=0x7f0a0016;
-        public static final int button1=0x7f0a0006;
-        public static final int button2=0x7f0a0007;
-        public static final int colorfulLine=0x7f0a0014;
-        public static final int fragment1=0x7f0a000a;
-        public static final int fragment2=0x7f0a000b;
-        public static final int fragment3=0x7f0a000c;
-        public static final int fragment4=0x7f0a000d;
-        public static final int header=0x7f0a0009;
-        public static final int pager=0x7f0a0008;
-        public static final int realtabcontent=0x7f0a0000;
-        public static final int tab_rb_1=0x7f0a0002;
-        public static final int tab_rb_2=0x7f0a0003;
-        public static final int tab_rb_3=0x7f0a0004;
-        public static final int tab_rb_4=0x7f0a0005;
-        public static final int tab_rg_menu=0x7f0a0001;
-        public static final int textView1=0x7f0a0015;
-        public static final int topbar=0x7f0a000e;
+        public static final int LEFT_BUTTON=0x7f0b000f;
+        public static final int PROGRESS_BAR=0x7f0b0013;
+        public static final int RIGHT_BUTTON=0x7f0b0011;
+        public static final int RIGHT_TOW_BUTTON=0x7f0b0012;
+        public static final int TITLE_TEXT=0x7f0b0010;
+        public static final int action_settings=0x7f0b0016;
+        public static final int button1=0x7f0b0006;
+        public static final int button2=0x7f0b0007;
+        public static final int colorfulLine=0x7f0b0014;
+        public static final int fragment1=0x7f0b000a;
+        public static final int fragment2=0x7f0b000b;
+        public static final int fragment3=0x7f0b000c;
+        public static final int fragment4=0x7f0b000d;
+        public static final int header=0x7f0b0009;
+        public static final int pager=0x7f0b0008;
+        public static final int realtabcontent=0x7f0b0000;
+        public static final int tab_rb_1=0x7f0b0002;
+        public static final int tab_rb_2=0x7f0b0003;
+        public static final int tab_rb_3=0x7f0b0004;
+        public static final int tab_rb_4=0x7f0b0005;
+        public static final int tab_rg_menu=0x7f0b0001;
+        public static final int textView1=0x7f0b0015;
+        public static final int topbar=0x7f0b000e;
     }
     public static final class layout {
         public static final int activity_bottom_tab=0x7f030000;
@@ -327,7 +330,7 @@ public final class R {
         public static final int other1=0x7f030009;
     }
     public static final class menu {
-        public static final int main=0x7f090000;
+        public static final int main=0x7f0a0000;
     }
     public static final class string {
         public static final int action_settings=0x7f070001;
@@ -360,19 +363,19 @@ public final class R {
     
  API 14 theme customizations can go here. 
          */
-        public static final int AppBaseTheme=0x7f080000;
+        public static final int AppBaseTheme=0x7f090000;
         /**  Application theme. 
  All customizations that are NOT specific to a particular API-level can go here. 
          */
-        public static final int AppTheme=0x7f080001;
-        public static final int DialogStyle=0x7f080003;
-        public static final int GlobeTextView=0x7f080007;
-        public static final int GlobeTheme=0x7f080008;
-        public static final int button_white=0x7f080005;
-        public static final int button_yellow=0x7f080006;
-        public static final int comm_return=0x7f080004;
-        public static final int menuAnimation=0x7f080009;
-        public static final int tab_rb_style=0x7f080002;
-        public static final int windowSlideAnimation=0x7f08000a;
+        public static final int AppTheme=0x7f090001;
+        public static final int DialogStyle=0x7f090003;
+        public static final int GlobeTextView=0x7f090007;
+        public static final int GlobeTheme=0x7f090008;
+        public static final int button_white=0x7f090005;
+        public static final int button_yellow=0x7f090006;
+        public static final int comm_return=0x7f090004;
+        public static final int menuAnimation=0x7f090009;
+        public static final int tab_rb_style=0x7f090002;
+        public static final int windowSlideAnimation=0x7f09000a;
     }
 }
