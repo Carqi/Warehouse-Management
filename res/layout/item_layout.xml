@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:minHeight="40dip"
+    android:gravity="center_vertical" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/txt_label"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:layout_marginLeft="15dp"
+            android:gravity="center_vertical|right" />
+
+        <RelativeLayout
+            android:id="@+id/text_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="40dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/txt_value"
+                android:layout_width="fill_parent"
+                android:layout_height="25dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="10dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="15dp"
+                android:background="@drawable/txt_bg"
+                android:gravity="center_vertical|left"
+                android:singleLine="true"
+                android:ellipsize="end"
+                 />
+
+            <ImageView
+                android:id="@+id/img_arrow_down"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignRight="@+id/txt_value"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/arrow_down"
+                android:contentDescription="@string/app_name" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/edit_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="40dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <EditText
+                android:id="@+id/edit_value"
+                android:layout_width="fill_parent"
+                android:layout_height="25dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="10dp"
+                android:paddingLeft="5dp"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:background="@drawable/edit_bg1"
+                android:gravity="center_vertical|left" />
+            
+            <TextView 
+                android:id="@+id/yuan_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/yuan"
+                android:layout_alignRight="@+id/edit_value"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="3dp"
+                android:textColor="@color/black_overlay"
+                android:visibility="gone"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/toggle_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="40dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <include
+                android:id="@+id/on_and_off"
+                android:layout_width="100dp"
+                android:layout_height="30dp"
+                android:layout_marginRight="10dp"
+                android:layout_alignParentRight="true"
+                layout="@layout/sidebutton" >
+            </include>
+        </RelativeLayout>
+        
+        <LinearLayout
+            android:id="@+id/edit_area_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <EditText
+                android:id="@+id/edit_area_value"
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:minHeight="100dip"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="10dp"
+                android:paddingLeft="5dp"
+                android:background="@drawable/edit_bg1"
+            	android:gravity="top"/>
+        </LinearLayout>
+        
+        
+			<RadioGroup
+                android:id="@+id/radio_group"
+                android:layout_width="fill_parent"
+                android:layout_height="50dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal" >
+                <RadioButton
+                    android:id="@+id/radio_button1"
+                    android:checked="true"
+                	android:layout_marginLeft="15dp"/>
+				<TextView 
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:text="男"/>
+
+                <RadioButton
+                    android:id="@+id/radio_button2"/>
+				<TextView 
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:text="女"/>
+
+            </RadioGroup>
+    </LinearLayout>
+
+</RelativeLayout>

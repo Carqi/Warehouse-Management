@@ -16,4 +16,5 @@
 <color name="theme_night_text_color">#59687C</color>
 
 <color name="theme_text_color">#050917</color>
+    <color name="black_overlay">#66000000</color>
 </resources>

@@ -1,6 +1,7 @@
 package com.carqi.warehouse.fragmentbottommenu;
 
 import com.carqi.fragmentbottommenu.R;
+import com.carqi.warehouse.main.AddInventoryActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -71,7 +72,8 @@ public class InventoryFragment extends Fragment implements OnClickListener{
 		switch(v.getId())
 		{
 		   case R.id.RIGHT_BUTTON:
-			   //Intent intent = new Intent(getActivity(), cls);
+			   Intent intent = new Intent(getActivity(), AddInventoryActivity.class);
+			   startActivity(intent);
 			   break;
 		}
 		

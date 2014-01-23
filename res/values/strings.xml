@@ -7,6 +7,7 @@
     
     <string name="inventory">库存</string>
     <string name="file">文件</string>
+    <string name="yuan">元</string>
 
     
     <string-array name="status_codes">
