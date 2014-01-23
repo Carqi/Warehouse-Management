@@ -14,7 +14,7 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/GlobeTheme" >
+        android:theme="@style/ContentOverlay" >
         <activity
             android:name="com.carqi.warehouse.fragmentbottommenu.MainActivity"
             android:label="@string/app_name" >

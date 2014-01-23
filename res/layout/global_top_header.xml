@@ -9,15 +9,18 @@
         android:layout_height="50dp"
         android:background="@drawable/common_titlebar"
      >
-      <Button
+      <ImageView
             android:id="@+id/LEFT_BUTTON"
             style="@style/comm_return"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:visibility="gone"
+            android:contentDescription="@string/app_name"
            />
       <TextView
             android:id="@+id/TITLE_TEXT"
+            style="@style/GlobeTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"

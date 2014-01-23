@@ -1,24 +1,15 @@
 package com.carqi.warehouse.widget;
 
 import java.lang.ref.WeakReference;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.InputType;
@@ -84,9 +75,6 @@ public class BaseInfoWidget extends RelativeLayout implements OnClickListener{
 	private SharedPreferences sharedPreference;
 	private String PHPSESSID;
 	private List<Map<String, String>> districtList = null;
-	private String district;
-	private String districtId;
-	private String aroundId;
 	private List<Map<String, String>> aroundList = null;
 	private List<NameValuePair> param = null;
 	private List<Map<String, String>> cellList = null;
@@ -270,8 +258,8 @@ public class BaseInfoWidget extends RelativeLayout implements OnClickListener{
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
-		if("房屋类型".equals(adapter.infoList.get(position).key)){
-			info = AppConfig.houseType;
+		if("类型".equals(StringUtils.deleteBlank(adapter.infoList.get(position).key))){
+			info = AppConfig.goodsType;
 			showDialog(info);
 		}else if("装修".equals(StringUtils.deleteBlank(adapter.infoList.get(position).key))){
 			info = AppConfig.decorate;
@@ -403,11 +391,6 @@ public class BaseInfoWidget extends RelativeLayout implements OnClickListener{
 		
 	}
 	
-	
-	
-	public void setAroundId(String aroundId){
-		this.aroundId = aroundId;
-	}
 	
 	
 	public void setYuanVisibel(String text){

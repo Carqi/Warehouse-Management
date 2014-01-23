@@ -11,13 +11,15 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+
 /**
  * 库存Fragment
- * @author Administrator
- * 上午12:20:31
+ * 
+ * @author Administrator 上午12:20:31
  */
-public class InventoryFragment extends Fragment implements OnClickListener{
+public class InventoryFragment extends Fragment implements OnClickListener {
 	private Button addInventory;
 
 	@Override
@@ -26,29 +28,28 @@ public class InventoryFragment extends Fragment implements OnClickListener{
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
 		init();
-		
+
 		View parentView = inflater.inflate(R.layout.fragment1, container, false);
-		Button backBtn = (Button)parentView.findViewById(R.id.button1);
-		Button toOtherActivityBtn = (Button)parentView.findViewById(R.id.button2);
-		
-		Button backBtn1 = (Button)parentView.findViewById(R.id.LEFT_BUTTON);
+		Button backBtn = (Button) parentView.findViewById(R.id.button1);
+		Button toOtherActivityBtn = (Button) parentView.findViewById(R.id.button2);
+
+		ImageView backBtn1 = (ImageView) parentView.findViewById(R.id.LEFT_BUTTON);
 		backBtn1.setVisibility(View.VISIBLE);
 		addInventory = (Button) parentView.findViewById(R.id.RIGHT_BUTTON);
 		addInventory.setVisibility(View.VISIBLE);
 		addInventory.setOnClickListener(this);
-		((TextView)parentView.findViewById(R.id.TITLE_TEXT)).setText("库存");
-		
+		((TextView) parentView.findViewById(R.id.TITLE_TEXT)).setText("库存");
+
 		backBtn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-//				if(mListener!=null)mListener.backEvent();
+				// if(mListener!=null)mListener.backEvent();
 			}
 		});
-		
+
 		toOtherActivityBtn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -56,26 +57,23 @@ public class InventoryFragment extends Fragment implements OnClickListener{
 				startActivity(intent);
 			}
 		});
-		
-		
+
 		return parentView;
 		// return super.onCreateView(, container, savedInstanceState);
 	}
 
 	private void init() {
-		
-		
+
 	}
 
 	@Override
 	public void onClick(View v) {
-		switch(v.getId())
-		{
-		   case R.id.RIGHT_BUTTON:
-			   Intent intent = new Intent(getActivity(), AddInventoryActivity.class);
-			   startActivity(intent);
-			   break;
+		switch (v.getId()) {
+		case R.id.RIGHT_BUTTON:
+			Intent intent = new Intent(getActivity(), AddInventoryActivity.class);
+			startActivity(intent);
+			break;
 		}
-		
+
 	}
 }

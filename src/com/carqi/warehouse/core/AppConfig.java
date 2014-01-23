@@ -14,7 +14,7 @@ import android.util.Log;
 public class AppConfig {
 	public static String[] ori = new String[] { "东", "南", "西", "北", "东南", "西南", "西北","东北", "南北", "东西" };
 	public static String[] decorate = new String[] { "毛坯房", "普通装修", "精装修", "豪华装修" };
-	public static String[] houseType = new String[] { "住宅", "别墅", "写字楼", "商铺","车库" };
+	public static String[] goodsType = new String[] { "工具", "消耗品" };
 	public static String[] rentType = new String[] { "整租", "合租" };
 	public static String[] payforType = new String[] { "押一付三", "押二付二", "押一付二", "押二付一", "押一付一", "年付不押", "半年付不押" };
 	public static String[] houseConfi = new String[] { "水", "电", "煤气", "暖气", "有线电视", "宽带", "冰箱", "空调", "洗衣机", "热水器",
@@ -45,9 +45,9 @@ public class AppConfig {
 	/** 数据库文件名*/
 	public static final String DB_FILE_NAME = "wjbroker_db";
 	/** 数据库版本号*/
-	public static final Integer DB_NOW_VERSION =2;
-	/** 求租客户列表*/
-	public static final String DB_RENT_LIST_TABLE = "rent_client_list";
+	public static final Integer DB_NOW_VERSION =1;
+	/** 货物表*/
+	public static final String GOODS_TABLE = "goods";
 	/** 求购客户列表*/
 	public static final String DB_BUY_LIST_TABLE = "buy_client_list";
 	/** 备忘录   表*/
@@ -244,21 +244,6 @@ public class AppConfig {
 			map.put(clientResource[i], i+1);
 		}
 		return map.get(resource)+"";
-	}
-	/**
-	 * 
-	 *  Function:获得房屋类别对应码
-	 *
-	 *  @author Gao XuYang  DateTime 2013-11-27 上午9:37:53
-	 *  @param house_type
-	 *  @return
-	 */
-	public static String getHouseTypeCode(String house_type){
-		HashMap<String, Integer> map = new HashMap<String, Integer>();
-		for(int i=0 ; i<houseType.length ; i++){
-			map.put(houseType[i], i+1);
-		}
-		return map.get(house_type)+"";
 	}
 	/**
 	 * 

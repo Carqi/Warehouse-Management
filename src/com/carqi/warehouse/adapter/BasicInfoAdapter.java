@@ -117,8 +117,8 @@ public class BasicInfoAdapter extends BaseAdapter {
 			viewItem.editValue.setInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_DECIMAL);
 		}
 		
-		if(StringUtils.deleteBlank(item.key).equals("租金")){
-			viewItem.editValue.setInputType(InputType.TYPE_CLASS_NUMBER);
+		if(StringUtils.deleteBlank(item.key).equals("单价")){
+			viewItem.editValue.setInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_DECIMAL);
 			viewItem.setYuanVisibel("元");
 		}
 		
