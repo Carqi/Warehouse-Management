@@ -2,7 +2,7 @@ package com.carqi.warehouse.core;
 
 import java.util.HashMap;
 
-import com.carqi.fragmentbottommenu.R;
+import com.carqi.warehouse.R;
 
 import android.util.Log;
 

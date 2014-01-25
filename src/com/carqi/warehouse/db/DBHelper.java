@@ -73,7 +73,7 @@ public class DBHelper {
 		@Override
 		public void onCreate(SQLiteDatabase db) {
 			CreateGoodsDb(db);
-			Log.i(TAG, "创建【求租客户表】成功");
+			Log.i(TAG, "创建【货物表】成功");
 			CreateBuyClientListDb(db);
 			Log.i(TAG, "创建【求购客户表】成功");
 			CreateMemoRandumDB(db);
@@ -115,6 +115,7 @@ public class DBHelper {
 			sb.append("[type] INTEGER, ");
 			sb.append("[unit_price] NVARCHAR(50) DEFAULT (''),");
 			sb.append("[buy_num] INTEGER, "); //购买数量
+			sb.append("[now_num] INTEGER, "); //剩余数量
 			sb.append("[total_price] NVARCHAR(50) DEFAULT (''),");
 			sb.append("[buy_personid] INTEGER,"); //购买人id
 			sb.append("[supplierid] INTEGER, ");

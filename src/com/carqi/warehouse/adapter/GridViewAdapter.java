@@ -2,7 +2,7 @@ package com.carqi.warehouse.adapter;
 
 import java.util.List;
 
-import com.carqi.fragmentbottommenu.R;
+import com.carqi.warehouse.R;
 import com.carqi.warehouse.entity.ItemEntity;
 
 import android.content.Context;

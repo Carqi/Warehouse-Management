@@ -2,7 +2,7 @@ package com.carqi.warehouse.bottommenu;
 
 import java.util.ArrayList;
 
-import com.carqi.fragmentbottommenu.R;
+import com.carqi.warehouse.R;
 
 import android.content.Context;
 import android.os.Bundle;

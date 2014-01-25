@@ -1,6 +1,6 @@
 package com.carqi.warehouse.bottommenu;
 
-import com.carqi.fragmentbottommenu.R;
+import com.carqi.warehouse.R;
 
 import android.app.Activity;
 import android.os.Bundle;

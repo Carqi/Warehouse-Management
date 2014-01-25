@@ -19,10 +19,10 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.carqi.fragmentbottommenu.R;
+import com.carqi.warehouse.R;
 import com.carqi.warehouse.adapter.BasicInfoAdapter;
 import com.carqi.warehouse.core.AppConfig;
-import com.carqi.warehouse.entity.RentClientEntity;
+import com.carqi.warehouse.entity.GoodsEntity;
 import com.carqi.warehouse.exception.ResponseException;
 import com.carqi.warehouse.impl.DataChangeListener;
 import com.carqi.warehouse.utils.RegexChk;
@@ -47,7 +47,7 @@ public class AddInventoryActivity extends BaseActivity implements OnClickListene
 	private List<BasicInfoAdapter.Info> infoList;
 	private ArrayList<String> selectedDataList;
 
-	private RentClientEntity rentClientEntity = new RentClientEntity();
+	private GoodsEntity goodsEntity = new GoodsEntity();
 
 	private Context context;
 	private ResponseException responseException;
@@ -116,21 +116,20 @@ public class AddInventoryActivity extends BaseActivity implements OnClickListene
 	public void dataModify(String key, String value, String code) {
 
 		BaseInfoWidget item;
-		if (StringUtils.deleteBlank(key).equals("姓名")) {
-			rentClientEntity.setReq_name(value);
+		if (StringUtils.deleteBlank(key).equals("商品名称")) {
+			goodsEntity.setName(value);
 		}
-		if (StringUtils.deleteBlank(key).equals("性别")) {
-			item = (BaseInfoWidget) rentBaseInfo.findViewWithTag(key);
-			rentClientEntity.setSex(value);
+		if (StringUtils.deleteBlank(key).equals("型号")) {
+			goodsEntity.setModel(value);
 		}
-		if (StringUtils.deleteBlank(key).equals("手机")) {
-			rentClientEntity.setTel(String.valueOf(value));
+		if (StringUtils.deleteBlank(key).equals("品牌")) {
+			goodsEntity.setBrand(value);
 		}
-		if (StringUtils.deleteBlank(key).equals("ＱＱ")) {
-			rentClientEntity.setQq(String.valueOf(value));
+		if (StringUtils.deleteBlank(key).equals("类型")) {
+			goodsEntity.setType(1);
 		}
-		if (StringUtils.deleteBlank(key).equals("微信")) {
-			rentClientEntity.setWeixin(String.valueOf(value));
+		if (StringUtils.deleteBlank(key).equals("单价")) {
+			goodsEntity.setUnit_price(Float.valueOf(value));
 		}
 		if (StringUtils.deleteBlank(key).equals("客户来源")) {
 			// rentClientEntity.setClientResouce(AppConfig.getClientResourceCode(value));
@@ -216,7 +215,7 @@ public class AddInventoryActivity extends BaseActivity implements OnClickListene
 		}
 	}
 
-	private void check(RentClientEntity rent) {
+	private void check(GoodsEntity rent) {
 		BaseInfoWidget infoWidget;
 		if (StringUtils.isEmpty(rent.getReq_name())) {
 			ShowUtil.toast(context, "姓名不能为空");
@@ -264,25 +263,6 @@ public class AddInventoryActivity extends BaseActivity implements OnClickListene
 		String sessionId = share.getString("sessionid", "");
 
 		HashMap<String, String> data = new HashMap<String, String>();
-		data.put("req_name", rentClientEntity.getReq_name());
-		data.put("req_sex", rentClientEntity.getSex());
-		data.put("req_tel", rentClientEntity.getTel());
-		data.put("qq", rentClientEntity.getQq());
-		data.put("weixin", rentClientEntity.getWeixin());
-		data.put("client_resouce", rentClientEntity.getClientResouce());
-		data.put("purpose", rentClientEntity.getHouseType());
-		data.put("req_regionid", rentClientEntity.getDistrictCode());
-		data.put("how_room", rentClientEntity.getHowRoom());
-		data.put("how_parlor", rentClientEntity.getHowParlor());
-		data.put("price_up", rentClientEntity.getPriceUp());
-		data.put("price_down", rentClientEntity.getPriceDown());
-		data.put("remark", rentClientEntity.getRemark());
-		data.put("client_type", rentClientEntity.getType() + "");
-		data.put("direction", rentClientEntity.getDirectionCode());
-		data.put("match_id", rentClientEntity.getConfigCode());
-		data.put("floor_down", rentClientEntity.getFloor_down());
-		data.put("floor_up", rentClientEntity.getFloor_up());
-		data.put("is_public", rentClientEntity.getIsPublic());
 
 		data.put("PHPSESSID", sessionId);
 

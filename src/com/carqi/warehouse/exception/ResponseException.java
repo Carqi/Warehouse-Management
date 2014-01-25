@@ -12,7 +12,7 @@ import org.apache.http.conn.ConnectTimeoutException;
 import org.json.JSONException;
 import org.xmlpull.v1.XmlPullParserException;
 
-import com.carqi.fragmentbottommenu.R;
+import com.carqi.warehouse.R;
 
 import android.content.Context;
 import android.text.TextUtils;

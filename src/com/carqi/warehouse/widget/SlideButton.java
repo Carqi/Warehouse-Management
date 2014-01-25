@@ -1,6 +1,6 @@
 package com.carqi.warehouse.widget;
 
-import com.carqi.fragmentbottommenu.R;
+import com.carqi.warehouse.R;
 import com.carqi.warehouse.impl.OnChangedListener;
 
 import android.content.Context;

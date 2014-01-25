@@ -3,7 +3,7 @@ package com.carqi.warehouse.bottommenu;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.carqi.fragmentbottommenu.R;
+import com.carqi.warehouse.R;
 import com.carqi.warehouse.adapter.GridViewAdapter;
 import com.carqi.warehouse.core.AppConfig;
 import com.carqi.warehouse.entity.ItemEntity;

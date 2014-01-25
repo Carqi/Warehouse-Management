@@ -28,7 +28,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.carqi.fragmentbottommenu.R;
+import com.carqi.warehouse.R;
 import com.carqi.warehouse.adapter.BasicInfoAdapter;
 import com.carqi.warehouse.core.AppConfig;
 import com.carqi.warehouse.exception.ResponseException;

@@ -5,7 +5,7 @@
  * should not be modified by hand.
  */
 
-package com.carqi.fragmentbottommenu;
+package com.carqi.warehouse;
 
 public final class R {
     public static final class anim {
