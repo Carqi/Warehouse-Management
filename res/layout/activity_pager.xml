@@ -28,19 +28,13 @@
             android:id="@+id/tab_rb_2"
             style="@style/tab_rb_style"
             android:drawableTop="@drawable/tab_selector_tongxunlu"
-            android:text="通讯录" />
+            android:text="@string/file" />
 
         <RadioButton
             android:id="@+id/tab_rb_3"
             style="@style/tab_rb_style"
             android:drawableTop="@drawable/tab_selector_faxian"
-            android:text="@string/file" />
-
-        <RadioButton
-            android:id="@+id/tab_rb_4"
-            style="@style/tab_rb_style"
-            android:drawableTop="@drawable/tab_selector_wo"
-            android:text="我" />
+            android:text="@string/setting" />
     </RadioGroup>
 
     <android.support.v4.app.FragmentTabHost

@@ -2,16 +2,18 @@ package com.carqi.warehouse.core;
 
 import java.util.HashMap;
 
+import com.carqi.fragmentbottommenu.R;
+
 import android.util.Log;
 
 /**
- * Class Name: AppConfig.java 配置类
- * 
- * @author Yu Liu DateTime 2013-11-6 上午10:23:06
- * @version 1.0
- * @company 长春优狐科技开发有限公司
+ * 配置类
+ * @author Administrator
+ * 2014-1-25 下午8:50:22
  */
 public class AppConfig {
+	public static String[] HomeItem = new String[]{"货物库存", "进货入库","工具管理","商品退货","导出Excel", "流水日志"};
+	public static int[] HomeItemImage = {R.drawable.ic_launcher,R.drawable.ic_launcher,R.drawable.ic_launcher,R.drawable.ic_launcher,R.drawable.ic_launcher,R.drawable.ic_launcher};
 	public static String[] ori = new String[] { "东", "南", "西", "北", "东南", "西南", "西北","东北", "南北", "东西" };
 	public static String[] decorate = new String[] { "毛坯房", "普通装修", "精装修", "豪华装修" };
 	public static String[] goodsType = new String[] { "工具", "消耗品" };

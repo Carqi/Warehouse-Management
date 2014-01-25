@@ -5,8 +5,9 @@
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
     
-    <string name="inventory">库存</string>
+    <string name="inventory">仓库</string>
     <string name="file">文件</string>
+    <string name="setting">设置</string>
     <string name="yuan">元</string>
 
     
