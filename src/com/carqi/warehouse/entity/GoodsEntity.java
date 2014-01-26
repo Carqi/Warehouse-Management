@@ -17,23 +17,23 @@ public class GoodsEntity implements Serializable {
 	/* 货品品牌*/
 	private String brand;
 	/* 类型 */
-	private Integer type;
+	private String type;
 	/* 单价 */
-	private float unit_price;
+	private String unit_price;
 	/* 购买数量 */
-	private Integer buy_num;
+	private String buy_num;
 	/* 剩余数量 */
-	private Integer now_num;
+	private String now_num;
 	/* 总价 */
-	private float total_price;
+	private String total_price;
 	/* 购买人id*/
-	private Integer buy_personid;
+	private String buy_personid;
 	/* 供应商id*/
-	private Integer supplierid;
+	private String supplierid;
 	/* 购买时间*/
-	private Integer buy_date;
+	private String buy_date;
 	/* 入库时间*/
-	private Integer in_date;
+	private String in_date;
 	/* 备注*/
 	private String remark;
 	
@@ -56,58 +56,58 @@ public class GoodsEntity implements Serializable {
 	public void setBrand(String brand) {
 		this.brand = brand;
 	}
-	public Integer getType() {
+	public String getType() {
 		return type;
 	}
-	public void setType(Integer type) {
+	public void setType(String type) {
 		this.type = type;
 	}
-	public float getUnit_price() {
+	public String getUnit_price() {
 		return unit_price;
 	}
-	public void setUnit_price(float unit_price) {
+	public void setUnit_price(String unit_price) {
 		this.unit_price = unit_price;
 	}
-	public Integer getBuy_num() {
+	public String getBuy_num() {
 		return buy_num;
 	}
-	public void setBuy_num(Integer buy_num) {
+	public void setBuy_num(String buy_num) {
 		this.buy_num = buy_num;
 	}
-	public Integer getNow_num() {
+	public String getNow_num() {
 		return now_num;
 	}
-	public void setNow_num(Integer now_num) {
+	public void setNow_num(String now_num) {
 		this.now_num = now_num;
 	}
-	public float getTotal_price() {
+	public String getTotal_price() {
 		return total_price;
 	}
-	public void setTotal_price(float total_price) {
+	public void setTotal_price(String total_price) {
 		this.total_price = total_price;
 	}
-	public Integer getBuy_personid() {
+	public String getBuy_personid() {
 		return buy_personid;
 	}
-	public void setBuy_personid(Integer buy_personid) {
+	public void setBuy_personid(String buy_personid) {
 		this.buy_personid = buy_personid;
 	}
-	public Integer getSupplierid() {
+	public String getSupplierid() {
 		return supplierid;
 	}
-	public void setSupplierid(Integer supplierid) {
+	public void setSupplierid(String supplierid) {
 		this.supplierid = supplierid;
 	}
-	public Integer getBuy_date() {
+	public String getBuy_date() {
 		return buy_date;
 	}
-	public void setBuy_date(Integer buy_date) {
+	public void setBuy_date(String buy_date) {
 		this.buy_date = buy_date;
 	}
-	public Integer getIn_date() {
+	public String getIn_date() {
 		return in_date;
 	}
-	public void setIn_date(Integer in_date) {
+	public void setIn_date(String in_date) {
 		this.in_date = in_date;
 	}
 	public String getRemark() {
@@ -116,5 +116,8 @@ public class GoodsEntity implements Serializable {
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
+	
+	
+	
 	
 }

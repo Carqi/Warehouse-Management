@@ -2,7 +2,6 @@ package com.carqi.warehouse.main;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 
 import android.content.Context;
@@ -14,6 +13,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -25,7 +25,6 @@ import com.carqi.warehouse.core.AppConfig;
 import com.carqi.warehouse.entity.GoodsEntity;
 import com.carqi.warehouse.exception.ResponseException;
 import com.carqi.warehouse.impl.DataChangeListener;
-import com.carqi.warehouse.utils.RegexChk;
 import com.carqi.warehouse.utils.ShowUtil;
 import com.carqi.warehouse.utils.StringUtils;
 import com.carqi.warehouse.widget.BaseInfoWidget;
@@ -41,6 +40,7 @@ public class AddInventoryActivity extends BaseActivity implements OnClickListene
 	private static final String TAG = AddInventoryActivity.class.getSimpleName();
 	private TextView titleText;
 	private ImageView leftBtn;
+	private Button rightBtn;
 	private ScrollView scrollView;
 	private LinearLayout rentBaseInfo;
 	private BasicInfoAdapter adapter;
@@ -69,6 +69,7 @@ public class AddInventoryActivity extends BaseActivity implements OnClickListene
 	private void init() {
 		titleText = (TextView) this.findViewById(R.id.TITLE_TEXT);
 		leftBtn = (ImageView) this.findViewById(R.id.LEFT_BUTTON);
+		rightBtn = (Button) this.findViewById(R.id.RIGHT_BUTTON);
 		scrollView = (ScrollView) this.findViewById(R.id.scroll_view);
 		rentBaseInfo = (LinearLayout) this.findViewById(R.id.rent_base_info);
 
@@ -80,6 +81,10 @@ public class AddInventoryActivity extends BaseActivity implements OnClickListene
 		titleText.setText("进货入库");
 		leftBtn.setVisibility(View.VISIBLE);
 		leftBtn.setOnClickListener(this);
+		
+		rightBtn.setVisibility(View.VISIBLE);
+		rightBtn.setBackgroundResource(R.drawable.button_save);
+		rightBtn.setOnClickListener(this);
 	}
 
 	private void displayClientInfo() {
@@ -126,73 +131,16 @@ public class AddInventoryActivity extends BaseActivity implements OnClickListene
 			goodsEntity.setBrand(value);
 		}
 		if (StringUtils.deleteBlank(key).equals("类型")) {
-			goodsEntity.setType(1);
+			goodsEntity.setType(value);
 		}
 		if (StringUtils.deleteBlank(key).equals("单价")) {
-			goodsEntity.setUnit_price(Float.valueOf(value));
+			goodsEntity.setUnit_price(value);
 		}
-		if (StringUtils.deleteBlank(key).equals("客户来源")) {
-			// rentClientEntity.setClientResouce(AppConfig.getClientResourceCode(value));
+		if (StringUtils.deleteBlank(key).equals("购买数量")) {
+			goodsEntity.setBuy_num(value);
 		}
-		if (StringUtils.deleteBlank(key).equals("房屋类型")) {
-			item = (BaseInfoWidget) rentBaseInfo.findViewWithTag(key);
-			item.setValue(value);
-			rentClientEntity.setHouseType(value);
-		}
-		if (StringUtils.deleteBlank(key).equals("区域")) {
-
-			rentClientEntity.setDistrict(value);
-			rentClientEntity.setDistrictCode(code);
-		}
-		if (StringUtils.deleteBlank(key).equals("户型")) {
-			item = (BaseInfoWidget) rentBaseInfo.findViewWithTag(key);
-			item.setValue(value);
-			String[] values = RegexChk.matcher(value);
-			rentClientEntity.setHowRoom(values[0]);
-			rentClientEntity.setHowParlor(values[1]);
-		}
-		if (StringUtils.deleteBlank(key).equals("租金范围")) {
-			item = (BaseInfoWidget) rentBaseInfo.findViewWithTag(key);
-			item.setValue(value);
-			String[] range = spliteRentRange(AppConfig.getRentRangeValue(value));
-			if (range[0].equals("500")) {
-				rentClientEntity.setPriceUp(range[0]);
-				rentClientEntity.setPriceDown(null);
-			} else if (range[0].equals("4500")) {
-				rentClientEntity.setPriceDown(range[0]);
-				rentClientEntity.setPriceUp(null);
-			} else {
-				rentClientEntity.setPriceDown(range[0]);
-				rentClientEntity.setPriceUp(range[1]);
-			}
-		}
-		if (StringUtils.deleteBlank(key).equals("配置")) {
-			rentClientEntity.setConfig(value);
-			rentClientEntity.setConfigCode(code);
-		}
-
-		if (StringUtils.deleteBlank(key).equals("备注")) {
-			android.util.Log.i(TAG, "备注---------->" + value);
-			rentClientEntity.setRemark(String.valueOf(value));
-		}
-
-		if (StringUtils.deleteBlank(key).equals("私盘")) {
-			item = (BaseInfoWidget) rentBaseInfo.findViewWithTag(key);
-			if ("true".equals(value)) {
-				rentClientEntity.setIsPublic("0");
-			} else {
-				rentClientEntity.setIsPublic("1");
-			}
-		}
-
-		if (StringUtils.deleteBlank(key).equals("楼层")) {
-			String[] values = RegexChk.matcher(value);
-			rentClientEntity.setFloor_down(values[0]);
-			rentClientEntity.setFloor_up(values[1]);
-		}
-		if (StringUtils.deleteBlank(key).equals("朝向")) {
-			android.util.Log.i(TAG, "朝向------>" + value);
-			rentClientEntity.setDirectionCode(AppConfig.getDirectionValue(value));
+		if (StringUtils.deleteBlank(key).equals("总金额")) {
+			goodsEntity.setTotal_price(value);
 		}
 	}
 
@@ -209,50 +157,21 @@ public class AddInventoryActivity extends BaseActivity implements OnClickListene
 		switch (v.getId()) {
 		case R.id.LEFT_BUTTON:
 			finish();
-
+			break;
+		case R.id.RIGHT_BUTTON:
+			
+			check(goodsEntity);
 			break;
 
 		}
 	}
 
-	private void check(GoodsEntity rent) {
+	private void check(GoodsEntity entity) {
 		BaseInfoWidget infoWidget;
-		if (StringUtils.isEmpty(rent.getReq_name())) {
-			ShowUtil.toast(context, "姓名不能为空");
+		if (StringUtils.isEmpty(entity.getName())) {
+			ShowUtil.toast(context, "商品名称不能为空");
 			return;
 		}
-		if (StringUtils.isEmpty(rent.getTel())) {
-			ShowUtil.toast(context, "手机不能为空");
-			return;
-		}
-		if (StringUtils.isEmpty(rent.getDistrictCode())) {
-			ShowUtil.toast(context, "区域不能为空");
-			return;
-		}
-		if (StringUtils.isEmpty(rent.getHowRoom())) {
-			ShowUtil.toast(context, "户型不能为空");
-			return;
-		}
-		if (StringUtils.isEmpty(rent.getSex())) {
-			rentClientEntity.setSex("1");
-
-		}
-		if (StringUtils.isEmpty(rent.getClientResouce())) {
-			infoWidget = (BaseInfoWidget) rentBaseInfo.findViewWithTag("客户来源");
-			String temp = infoWidget.getValue();
-			rentClientEntity.setClientResouce(AppConfig.getClientResourceCode(temp));
-		}
-		if (StringUtils.isEmpty(rent.getHouseType())) {
-			infoWidget = (BaseInfoWidget) rentBaseInfo.findViewWithTag("房屋类型");
-			String temp = infoWidget.getValue();
-			rentClientEntity.setHouseType(temp);
-		}
-		if (StringUtils.isEmpty(rent.getPriceDown()) && StringUtils.isEmpty(rent.getPriceUp())) {
-			ShowUtil.toast(context, "租金范围不能为空");
-			return;
-		}
-
-		rentClientEntity.setType(1); // 1为新建客户
 
 		addRentClient();
 
