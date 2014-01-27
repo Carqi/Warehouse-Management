@@ -32,9 +32,6 @@ public class Fragment2 extends Fragment {
 	public void onPause() {
 		// TODO Auto-generated method stub
 		super.onPause();
-		Log.i("Fragment2", "~~~~~~~~~~~~onPause~~~~~~~~~~~~~~");
-		Log.i("Fragment2", "~~~~~~~~~~~~onPause~~~~~~~~~~~~~~");
-		Log.i("Fragment2", "~~~~~~~~~~~~onPause~~~~~~~~~~~~~~");
 	}
 
 	@Override
