@@ -49,7 +49,7 @@ public class AppConfig {
 	/** 数据库版本号*/
 	public static final Integer DB_NOW_VERSION =1;
 	/** 货物表*/
-	public static final String GOODS_TABLE = "goods";
+	public static final String DB_GOODS_TABLE = "goods";
 	/** 求购客户列表*/
 	public static final String DB_BUY_LIST_TABLE = "buy_client_list";
 	/** 备忘录   表*/

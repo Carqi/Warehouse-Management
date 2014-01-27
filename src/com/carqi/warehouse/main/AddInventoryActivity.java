@@ -1,11 +1,9 @@
 package com.carqi.warehouse.main;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -13,7 +11,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -22,6 +19,7 @@ import android.widget.TextView;
 import com.carqi.warehouse.R;
 import com.carqi.warehouse.adapter.BasicInfoAdapter;
 import com.carqi.warehouse.core.AppConfig;
+import com.carqi.warehouse.db.GoodsDBHelper;
 import com.carqi.warehouse.entity.GoodsEntity;
 import com.carqi.warehouse.exception.ResponseException;
 import com.carqi.warehouse.impl.DataChangeListener;
@@ -40,7 +38,7 @@ public class AddInventoryActivity extends BaseActivity implements OnClickListene
 	private static final String TAG = AddInventoryActivity.class.getSimpleName();
 	private TextView titleText;
 	private ImageView leftBtn;
-	private Button rightBtn;
+	private ImageView rightBtn;
 	private ScrollView scrollView;
 	private LinearLayout rentBaseInfo;
 	private BasicInfoAdapter adapter;
@@ -48,6 +46,8 @@ public class AddInventoryActivity extends BaseActivity implements OnClickListene
 	private ArrayList<String> selectedDataList;
 
 	private GoodsEntity goodsEntity = new GoodsEntity();
+
+	private GoodsDBHelper goodsDbHelper;
 
 	private Context context;
 	private ResponseException responseException;
@@ -69,7 +69,7 @@ public class AddInventoryActivity extends BaseActivity implements OnClickListene
 	private void init() {
 		titleText = (TextView) this.findViewById(R.id.TITLE_TEXT);
 		leftBtn = (ImageView) this.findViewById(R.id.LEFT_BUTTON);
-		rightBtn = (Button) this.findViewById(R.id.RIGHT_BUTTON);
+		rightBtn = (ImageView) this.findViewById(R.id.RIGHT_BUTTON);
 		scrollView = (ScrollView) this.findViewById(R.id.scroll_view);
 		rentBaseInfo = (LinearLayout) this.findViewById(R.id.rent_base_info);
 
@@ -173,18 +173,13 @@ public class AddInventoryActivity extends BaseActivity implements OnClickListene
 			return;
 		}
 
-		addRentClient();
+		addGoods();
 
 	}
 
-	private void addRentClient() {
-		SharedPreferences share = getSharedPreferences("loginok", 0);
-		String sessionId = share.getString("sessionid", "");
-
-		HashMap<String, String> data = new HashMap<String, String>();
-
-		data.put("PHPSESSID", sessionId);
-
+	private void addGoods() {
+		goodsDbHelper = new GoodsDBHelper(context);
+		goodsDbHelper.insert(goodsEntity);
 	}
 
 	/**

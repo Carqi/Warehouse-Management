@@ -106,7 +106,7 @@ public class DBHelper {
 		 */
 		private void CreateGoodsDb(SQLiteDatabase db) {
 			StringBuilder sb = new StringBuilder();
-			sb.append("CREATE TABLE ["+AppConfig.GOODS_TABLE+"] (");
+			sb.append("CREATE TABLE ["+AppConfig.DB_GOODS_TABLE+"] (");
 			sb.append("[Id] INTEGER PRIMARY KEY AUTOINCREMENT, ");
 			
 			sb.append("[name] NVARCHAR(50) DEFAULT (''), ");
@@ -119,8 +119,8 @@ public class DBHelper {
 			sb.append("[total_price] NVARCHAR(50) DEFAULT (''),");
 			sb.append("[buy_personid] INTEGER,"); //购买人id
 			sb.append("[supplierid] INTEGER, ");
-			sb.append("[buy_date] VARCHAR DEFAULT ('')), "); //购买时间
-			sb.append("[in_date] VARCHAR DEFAULT ('')), "); //入库时间
+			sb.append("[buy_date] VARCHAR DEFAULT (''), "); //购买时间
+			sb.append("[in_date] VARCHAR DEFAULT (''), "); //入库时间
 			sb.append("[remark] VARCHAR DEFAULT ('')) "); //备注
 			db.execSQL(sb.toString());
 		}

@@ -1,13 +1,11 @@
 package com.carqi.warehouse.db;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.carqi.warehouse.entity.GoodsEntity;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+
+import com.carqi.warehouse.core.AppConfig;
+import com.carqi.warehouse.entity.GoodsEntity;
 
 /**
  * 货品数据库操作类
@@ -54,27 +52,23 @@ public class GoodsDBHelper {
 	 * 
 	 * @param list
 	 */
-	public void SynchronyData2DB(List<GoodsEntity> goodsList, String username) {
-		List<ContentValues> list = new ArrayList<ContentValues>();
-
-		for (int i = 0, child_len = goodsList.size(); i < child_len; i++) {
-
+	public void insert(GoodsEntity entity) {
 			ContentValues contentValues = new ContentValues();
 
-			contentValues.put("name", goodsList.get(i).getName());
-			contentValues.put("model", goodsList.get(i).getModel());
-			contentValues.put("brand", goodsList.get(i).getBrand());
-			contentValues.put("type", goodsList.get(i).getType());
-			contentValues.put("unit_price", goodsList.get(i).getUnit_price());
-			contentValues.put("buy_num", goodsList.get(i).getBuy_num());
-			contentValues.put("now_num", goodsList.get(i).getNow_num());
-			contentValues.put("total_price", goodsList.get(i).getTotal_price());
-			contentValues.put("buy_personid", goodsList.get(i).getBuy_personid());
-			contentValues.put("supplierid", goodsList.get(i).getSupplierid());
-			contentValues.put("buy_date", goodsList.get(i).getBuy_date());
-			contentValues.put("in_date", goodsList.get(i).getIn_date());
-			contentValues.put("remark", goodsList.get(i).getRemark());
-			list.add(contentValues);
-		}
+			contentValues.put("name", entity.getName());
+			contentValues.put("model", entity.getModel());
+			contentValues.put("brand", entity.getBrand());
+			contentValues.put("type", entity.getType());
+			contentValues.put("unit_price", entity.getUnit_price());
+			contentValues.put("buy_num", entity.getBuy_num());
+			contentValues.put("now_num", entity.getNow_num());
+			contentValues.put("total_price", entity.getTotal_price());
+			contentValues.put("buy_personid", entity.getBuy_personid());
+			contentValues.put("supplierid", entity.getSupplierid());
+			contentValues.put("buy_date", entity.getBuy_date());
+			contentValues.put("in_date", entity.getIn_date());
+			contentValues.put("remark", entity.getRemark());
+			db.insert(AppConfig.DB_GOODS_TABLE, null, contentValues);
+		
 	}
 }

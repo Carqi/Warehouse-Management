@@ -32,7 +32,7 @@ import android.widget.AdapterView.OnItemClickListener;
  */
 public class InventoryFragment extends Fragment implements OnClickListener {
 	private static final String TAG = InventoryFragment.class.getSimpleName();
-	private Button addInventory;
+	private ImageView addInventory;
 	private GridView gridview;
 	private GridViewAdapter adapter;
 	private List<ItemEntity> itemList = new ArrayList<ItemEntity>();
@@ -65,7 +65,7 @@ public class InventoryFragment extends Fragment implements OnClickListener {
 
 		ImageView backBtn1 = (ImageView) getView().findViewById(R.id.LEFT_BUTTON);
 		backBtn1.setVisibility(View.VISIBLE);
-		addInventory = (Button) getView().findViewById(R.id.RIGHT_BUTTON);
+		addInventory = (ImageView) getView().findViewById(R.id.RIGHT_BUTTON);
 		addInventory.setVisibility(View.VISIBLE);
 		addInventory.setOnClickListener(this);
 		((TextView) getView().findViewById(R.id.TITLE_TEXT)).setText("仓库");
