@@ -107,6 +107,7 @@ public class BasicInfoAdapter extends BaseAdapter {
 		BaseInfoWidget viewItem = (BaseInfoWidget) view;
 		viewItem.adapter = BasicInfoAdapter.this;
 		viewItem.setKey(item.key);
+		Log.i(TAG, "item.key-------------->"+item.key);
 		viewItem.setTag(item.key);
 		
 		Log.i(TAG, "item.value----------->"+item.value);
@@ -165,6 +166,13 @@ public class BasicInfoAdapter extends BaseAdapter {
 		public Info(String key, int type, String value) {
 			this(key, type, value,InputType.TYPE_CLASS_TEXT);
 		}
+		
+		public Info(String key, int type, int inputType){
+			this.key = key;
+			this.type = type;
+			this.inputType = inputType;
+		}
+		
 		public Info(String key, int type, String value,int inputType){
 			this.key = key;
 			this.type = type;

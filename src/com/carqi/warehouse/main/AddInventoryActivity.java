@@ -6,6 +6,8 @@ import java.util.List;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
@@ -40,7 +42,7 @@ public class AddInventoryActivity extends BaseActivity implements OnClickListene
 	private ImageView leftBtn;
 	private ImageView rightBtn;
 	private ScrollView scrollView;
-	private LinearLayout rentBaseInfo;
+	private LinearLayout baseInfoLayout;
 	private BasicInfoAdapter adapter;
 	private List<BasicInfoAdapter.Info> infoList;
 	private ArrayList<String> selectedDataList;
@@ -71,7 +73,7 @@ public class AddInventoryActivity extends BaseActivity implements OnClickListene
 		leftBtn = (ImageView) this.findViewById(R.id.LEFT_BUTTON);
 		rightBtn = (ImageView) this.findViewById(R.id.RIGHT_BUTTON);
 		scrollView = (ScrollView) this.findViewById(R.id.scroll_view);
-		rentBaseInfo = (LinearLayout) this.findViewById(R.id.rent_base_info);
+		baseInfoLayout = (LinearLayout) this.findViewById(R.id.rent_base_info);
 
 		displayClientInfo();
 		refreshClientInfo();
@@ -94,7 +96,7 @@ public class AddInventoryActivity extends BaseActivity implements OnClickListene
 		infoList.add(new BasicInfoAdapter.Info("品　　牌", BaseInfoWidget.SIMPLETEXT_TYPE));
 		infoList.add(new BasicInfoAdapter.Info("类　　型", BaseInfoWidget.SELECTION_TYPE, AppConfig.goodsType[0]));
 		infoList.add(new BasicInfoAdapter.Info("单　　价", BaseInfoWidget.SIMPLETEXT_TYPE));
-		infoList.add(new BasicInfoAdapter.Info("购买数量", BaseInfoWidget.SELECTION_TYPE, AppConfig.clientResource[0]));
+		infoList.add(new BasicInfoAdapter.Info("购买数量", BaseInfoWidget.SIMPLETEXT_TYPE, InputType.TYPE_CLASS_NUMBER));
 
 		infoList.add(new BasicInfoAdapter.Info("总  金  额", BaseInfoWidget.SELECTION_TYPE));
 		infoList.add(new BasicInfoAdapter.Info("采  购  人", BaseInfoWidget.SELECTION_TYPE));
@@ -108,11 +110,11 @@ public class AddInventoryActivity extends BaseActivity implements OnClickListene
 
 	private void refreshClientInfo() {
 		for (int i = 0; i < infoList.size(); i++) {
-			rentBaseInfo.addView(adapter.getView(i, null, null));
+			baseInfoLayout.addView(adapter.getView(i, null, null));
 			View dividerView = new View(this);
 			dividerView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, 1));
 			dividerView.setBackgroundResource(R.drawable.dotted_line);
-			rentBaseInfo.addView(dividerView);
+			baseInfoLayout.addView(dividerView);
 
 		}
 	}
@@ -172,7 +174,19 @@ public class AddInventoryActivity extends BaseActivity implements OnClickListene
 			ShowUtil.toast(context, "商品名称不能为空");
 			return;
 		}
-
+		if (StringUtils.isEmpty(entity.getUnit_price())) {
+			ShowUtil.toast(context, "单价不能为空");
+			return;
+		}
+		if(StringUtils.isEmpty(entity.getType())){
+			infoWidget = (BaseInfoWidget) baseInfoLayout.findViewWithTag("类　　型");
+			String temp = infoWidget.getValue();
+			Log.i(TAG, "temp--------->"+temp);
+		
+			
+			
+			goodsEntity.setType(temp);
+		}
 		addGoods();
 
 	}

@@ -120,7 +120,13 @@ public class BaseInfoWidget extends RelativeLayout implements OnClickListener{
 			editValue.setInputType(InputType.TYPE_CLASS_PHONE);
 			editValue.setFilters(new InputFilter[]{new InputFilter.LengthFilter(11)});
 		}
-		
+		/*
+		if(inputType == InputType.TYPE_CLASS_NUMBER){
+			editValue.setInputType(InputType.TYPE_CLASS_NUMBER);
+			editValue.setFilters(new InputFilter[]{new InputFilter.LengthFilter(9)});
+			
+		}
+		*/
 	}
 	
 	private void setEdit(){
