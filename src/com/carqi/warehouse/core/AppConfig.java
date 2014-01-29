@@ -45,13 +45,13 @@ public class AppConfig {
 	/****更多页结束---*/
 	/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~数据库操作~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 	/** 数据库文件名*/
-	public static final String DB_FILE_NAME = "wjbroker_db";
+	public static final String DB_FILE_NAME = "warehouse_db";
 	/** 数据库版本号*/
 	public static final Integer DB_NOW_VERSION =1;
 	/** 货物表*/
 	public static final String DB_GOODS_TABLE = "goods";
 	/** 求购客户列表*/
-	public static final String DB_BUY_LIST_TABLE = "buy_client_list";
+	public static final String DB_BUY_PERSON_TABLE = "buy_person";
 	/** 备忘录   表*/
 	public static final String DB_MEMORANDUM_TABLE = "memo_randum";
 	

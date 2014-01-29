@@ -74,7 +74,7 @@ public class DBHelper {
 		public void onCreate(SQLiteDatabase db) {
 			CreateGoodsDb(db);
 			Log.i(TAG, "创建【货物表】成功");
-			CreateBuyClientListDb(db);
+			CreateBuyPersonDb(db);
 			Log.i(TAG, "创建【求购客户表】成功");
 			CreateMemoRandumDB(db);
 			Log.i(TAG, "创建【备忘录表】成功");
@@ -126,28 +126,23 @@ public class DBHelper {
 		}
 		
 		/**
-		 * 
-		 *  Function:创建求购客户表
-		 *
-		 *  @author Gao XuYang  DateTime 2013-12-5 上午11:06:25
-		 *  @param db
+		 * 创建购买人信息表
+		 * @author Administrator
+		 * 2014-1-29 下午10:52:12
+		 * @param db
 		 */
-		private void CreateBuyClientListDb(SQLiteDatabase db) {
+		private void CreateBuyPersonDb(SQLiteDatabase db) {
 			StringBuilder sb = new StringBuilder();
-			sb.append("CREATE TABLE ["+AppConfig.DB_BUY_LIST_TABLE+"] (");
+			sb.append("CREATE TABLE ["+AppConfig.DB_BUY_PERSON_TABLE+"] (");
 			sb.append("[Id] INTEGER PRIMARY KEY AUTOINCREMENT, ");
 						
 			
 			sb.append("[clientId] INTEGER, ");
-			sb.append("[clientName] NVARCHAR(50) DEFAULT (''), ");
-			sb.append("[age] NVARCHAR(50) DEFAULT (''), ");
-			sb.append("[sex] NVARCHAR(50) DEFAULT (''), ");
+			sb.append("[name] NVARCHAR(50) DEFAULT (''), ");
 			sb.append("[name_all_letter] VARCHAR DEFAULT (''), ");
 			sb.append("[name_first_letter] VARCHAR DEFAULT (''), ");
-			sb.append("[type] INTEGER, ");
-			sb.append("[clientTel] NVARCHAR(50) DEFAULT (''),");
-			
-			sb.append("[username] VARCHAR DEFAULT ('')) ");
+			sb.append("[sex] NVARCHAR(50) DEFAULT (''), ");
+			sb.append("[tel] NVARCHAR(50) DEFAULT ('')) ");
 			db.execSQL(sb.toString());
 		}
 

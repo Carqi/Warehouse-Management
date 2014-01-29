@@ -63,8 +63,7 @@ public class InventoryFragment extends Fragment implements OnClickListener {
 		Button backBtn = (Button) getView().findViewById(R.id.button1);
 		Button toOtherActivityBtn = (Button) getView().findViewById(R.id.button2);
 
-		ImageView backBtn1 = (ImageView) getView().findViewById(R.id.LEFT_BUTTON);
-		backBtn1.setVisibility(View.VISIBLE);
+		
 		addInventory = (ImageView) getView().findViewById(R.id.RIGHT_BUTTON);
 		addInventory.setVisibility(View.VISIBLE);
 		addInventory.setOnClickListener(this);

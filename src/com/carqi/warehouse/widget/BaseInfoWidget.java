@@ -88,10 +88,10 @@ public class BaseInfoWidget extends RelativeLayout implements OnClickListener{
 	 /**
 	 * @param context
 	 */
-	public BaseInfoWidget(Context _context,int type) {
+	public BaseInfoWidget(Context _context,int type, int inputType) {
 		super(_context);
-		this.type = type;
 		this.context = _context;
+		this.type = type;
 		this.weak = new WeakReference<DataChangeListener>((DataChangeListener) _context);
 		LayoutInflater inflater = (LayoutInflater) _context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		inflater.inflate(R.layout.item_layout, this);
@@ -120,13 +120,13 @@ public class BaseInfoWidget extends RelativeLayout implements OnClickListener{
 			editValue.setInputType(InputType.TYPE_CLASS_PHONE);
 			editValue.setFilters(new InputFilter[]{new InputFilter.LengthFilter(11)});
 		}
-		/*
+		
 		if(inputType == InputType.TYPE_CLASS_NUMBER){
 			editValue.setInputType(InputType.TYPE_CLASS_NUMBER);
 			editValue.setFilters(new InputFilter[]{new InputFilter.LengthFilter(9)});
 			
 		}
-		*/
+		
 	}
 	
 	private void setEdit(){

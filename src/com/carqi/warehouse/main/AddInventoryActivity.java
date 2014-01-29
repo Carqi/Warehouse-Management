@@ -7,7 +7,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.InputType;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
@@ -41,11 +40,9 @@ public class AddInventoryActivity extends BaseActivity implements OnClickListene
 	private TextView titleText;
 	private ImageView leftBtn;
 	private ImageView rightBtn;
-	private ScrollView scrollView;
 	private LinearLayout baseInfoLayout;
 	private BasicInfoAdapter adapter;
 	private List<BasicInfoAdapter.Info> infoList;
-	private ArrayList<String> selectedDataList;
 
 	private GoodsEntity goodsEntity = new GoodsEntity();
 
@@ -62,7 +59,6 @@ public class AddInventoryActivity extends BaseActivity implements OnClickListene
 		context = this;
 		adapter = new BasicInfoAdapter(this, "rent", "client_module");
 		infoList = new ArrayList<BasicInfoAdapter.Info>();
-		selectedDataList = new ArrayList<String>();
 
 		init();
 		setTitle();
@@ -72,7 +68,6 @@ public class AddInventoryActivity extends BaseActivity implements OnClickListene
 		titleText = (TextView) this.findViewById(R.id.TITLE_TEXT);
 		leftBtn = (ImageView) this.findViewById(R.id.LEFT_BUTTON);
 		rightBtn = (ImageView) this.findViewById(R.id.RIGHT_BUTTON);
-		scrollView = (ScrollView) this.findViewById(R.id.scroll_view);
 		baseInfoLayout = (LinearLayout) this.findViewById(R.id.rent_base_info);
 
 		displayClientInfo();
@@ -98,7 +93,7 @@ public class AddInventoryActivity extends BaseActivity implements OnClickListene
 		infoList.add(new BasicInfoAdapter.Info("单　　价", BaseInfoWidget.SIMPLETEXT_TYPE));
 		infoList.add(new BasicInfoAdapter.Info("购买数量", BaseInfoWidget.SIMPLETEXT_TYPE, InputType.TYPE_CLASS_NUMBER));
 
-		infoList.add(new BasicInfoAdapter.Info("总  金  额", BaseInfoWidget.SELECTION_TYPE));
+		infoList.add(new BasicInfoAdapter.Info("总  金  额", BaseInfoWidget.SIMPLETEXT_TYPE));
 		infoList.add(new BasicInfoAdapter.Info("采  购  人", BaseInfoWidget.SELECTION_TYPE));
 		infoList.add(new BasicInfoAdapter.Info("供  应  商", BaseInfoWidget.SELECTION_TYPE));
 		infoList.add(new BasicInfoAdapter.Info("购买时间", BaseInfoWidget.SELECTION_TYPE));
@@ -137,13 +132,35 @@ public class AddInventoryActivity extends BaseActivity implements OnClickListene
 		}
 		if (StringUtils.deleteBlank(key).equals("单价")) {
 			goodsEntity.setUnit_price(value);
+			if((goodsEntity.getUnit_price()!=null && !goodsEntity.getUnit_price().equals("")) && (goodsEntity.getBuy_num()!=null && !goodsEntity.getBuy_num().equals(""))){
+				String totalMoney = getTotalMoney(goodsEntity);
+				item = (BaseInfoWidget) baseInfoLayout.findViewWithTag("总  金  额");
+				item.setValue(totalMoney);
+				goodsEntity.setTotal_price(totalMoney);
+			}
+			
 		}
 		if (StringUtils.deleteBlank(key).equals("购买数量")) {
 			goodsEntity.setBuy_num(value);
+			if((goodsEntity.getUnit_price()!=null && !goodsEntity.getUnit_price().equals("")) && (goodsEntity.getBuy_num()!=null && !goodsEntity.getBuy_num().equals(""))){
+				String totalMoney = getTotalMoney(goodsEntity);
+				item = (BaseInfoWidget) baseInfoLayout.findViewWithTag("总  金  额");
+				item.setValue(totalMoney);
+				goodsEntity.setTotal_price(totalMoney);
+			}
+			
 		}
 		if (StringUtils.deleteBlank(key).equals("总金额")) {
 			goodsEntity.setTotal_price(value);
 		}
+	}
+
+	private String getTotalMoney(GoodsEntity entity) {
+		float price = Float.valueOf(entity.getUnit_price());
+		float num = Float.valueOf(entity.getBuy_num());
+		float totalMoney = price*num;
+		return String.valueOf(totalMoney);
+		
 	}
 
 	private String[] spliteRentRange(String rentRangeValue) {
@@ -178,13 +195,13 @@ public class AddInventoryActivity extends BaseActivity implements OnClickListene
 			ShowUtil.toast(context, "单价不能为空");
 			return;
 		}
+		if (StringUtils.isEmpty(entity.getBuy_num())) {
+			ShowUtil.toast(context, "购买数量不能为空");
+			return;
+		}
 		if(StringUtils.isEmpty(entity.getType())){
 			infoWidget = (BaseInfoWidget) baseInfoLayout.findViewWithTag("类　　型");
 			String temp = infoWidget.getValue();
-			Log.i(TAG, "temp--------->"+temp);
-		
-			
-			
 			goodsEntity.setType(temp);
 		}
 		addGoods();
@@ -193,7 +210,13 @@ public class AddInventoryActivity extends BaseActivity implements OnClickListene
 
 	private void addGoods() {
 		goodsDbHelper = new GoodsDBHelper(context);
-		goodsDbHelper.insert(goodsEntity);
+		long result = goodsDbHelper.insert(goodsEntity);
+		if(result != -1){
+			ShowUtil.toast(context, "添加成功");
+			finish();
+		}else{
+			ShowUtil.toast(context, "添加失败");
+		}
 	}
 
 	/**

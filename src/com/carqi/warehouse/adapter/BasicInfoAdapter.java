@@ -123,9 +123,9 @@ public class BasicInfoAdapter extends BaseAdapter {
 			viewItem.setYuanVisibel("元");
 		}
 		
-		if(StringUtils.deleteBlank(item.key).equals("售价")){
+		if(StringUtils.deleteBlank(item.key).equals("总金额")){
 			viewItem.editValue.setInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_DECIMAL);
-			viewItem.setYuanVisibel("万元");
+			viewItem.setYuanVisibel("元");
 		}
 		
 		if(StringUtils.deleteBlank(item.key).equals("座栋")){
@@ -148,9 +148,6 @@ public class BasicInfoAdapter extends BaseAdapter {
 			viewItem.setClientNeed(clientNeed);
 		}
 		
-		if(StringUtils.deleteBlank(item.key).equals("房屋类型")){
-			viewItem.setValue("住宅");
-		}
 	}
 
 	public static class Info {
@@ -198,7 +195,7 @@ public class BasicInfoAdapter extends BaseAdapter {
 	        viewList.clear();
 	        for (int i = 0; i < contentList.size(); i++) {
 	           BaseInfoWidget viewItem ;
-	           viewItem = new BaseInfoWidget(context, contentList.get(i).type);
+	           viewItem = new BaseInfoWidget(context, contentList.get(i).type, contentList.get(i).inputType);
 	           viewItem.position = i;
 	           viewList.add(viewItem);
 	        }

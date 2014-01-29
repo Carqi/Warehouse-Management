@@ -52,7 +52,7 @@ public class GoodsDBHelper {
 	 * 
 	 * @param list
 	 */
-	public void insert(GoodsEntity entity) {
+	public long insert(GoodsEntity entity) {
 			ContentValues contentValues = new ContentValues();
 
 			contentValues.put("name", entity.getName());
@@ -68,7 +68,7 @@ public class GoodsDBHelper {
 			contentValues.put("buy_date", entity.getBuy_date());
 			contentValues.put("in_date", entity.getIn_date());
 			contentValues.put("remark", entity.getRemark());
-			db.insert(AppConfig.DB_GOODS_TABLE, null, contentValues);
+			return db.insert(AppConfig.DB_GOODS_TABLE, null, contentValues);
 		
 	}
 }
