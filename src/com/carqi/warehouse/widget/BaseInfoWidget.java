@@ -267,15 +267,9 @@ public class BaseInfoWidget extends RelativeLayout implements OnClickListener{
 		if("类型".equals(StringUtils.deleteBlank(adapter.infoList.get(position).key))){
 			info = AppConfig.goodsType;
 			showDialog(info);
-		}else if("装修".equals(StringUtils.deleteBlank(adapter.infoList.get(position).key))){
-			info = AppConfig.decorate;
+		}else if("采购人".equals(StringUtils.deleteBlank(adapter.infoList.get(position).key))){
+			info = AppConfig.houseConfi;
 			showDialog(info);
-		}else if("朝向".equals(StringUtils.deleteBlank(adapter.infoList.get(position).key))){
-			info = AppConfig.ori;
-			showDialog(info);
-		}else if("配置".equals(StringUtils.deleteBlank(adapter.infoList.get(position).key))){
-//			info = AppConfig.houseConfi;
-//			showDialog(info);
 			
 			
 		}else if("出租方式".equals(StringUtils.deleteBlank(adapter.infoList.get(position).key))){
@@ -329,24 +323,25 @@ public class BaseInfoWidget extends RelativeLayout implements OnClickListener{
 		AlertDialog.Builder dialog = new AlertDialog.Builder(context);
 		dialog.setIcon(android.R.drawable.ic_dialog_info);
 		dialog.setTitle(adapter.infoList.get(position).key);
-		if("配置".equals(StringUtils.deleteBlank(adapter.infoList.get(position).key))){
+		if("采购人".equals(StringUtils.deleteBlank(adapter.infoList.get(position).key))){
 			
-			for(int i=0;i<length;i++){
-				if(txtValue.getText().toString().contains(info[i])){
-					checkedId[i] = true;
-				}else{
-					checkedId[i] = false;
+			int checkedItem = 0;
+			for(int i=0;i < length;i++){
+				if(txtValue.getText().toString().equals(info[i])){
+					checkedItem = i;
 				}
 			}
-			dialog.setMultiChoiceItems(info,checkedId, new DialogInterface.OnMultiChoiceClickListener() {
-				
+			dialog.setSingleChoiceItems(info, checkedItem, new DialogInterface.OnClickListener() {
 				@Override
-				public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-					checkedId[which] = isChecked;
+				public void onClick(DialogInterface dialog, int which) {
+					// TODO Auto-generated method stub
+					txtValue.setText(info[which]);
+					weak.get().dataModify(adapter.infoList.get(position).key, info[which],""+(which+1));
+					dialog.dismiss();
 				}
 			});
 			
-			dialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+			dialog.setPositiveButton("添 加", new DialogInterface.OnClickListener() {
 				
 				@Override
 				public void onClick(DialogInterface dialog, int which) {

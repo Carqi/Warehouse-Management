@@ -20,7 +20,9 @@ import android.widget.TextView;
 import com.carqi.warehouse.R;
 import com.carqi.warehouse.adapter.BasicInfoAdapter;
 import com.carqi.warehouse.core.AppConfig;
+import com.carqi.warehouse.db.BuyPersonDBHelper;
 import com.carqi.warehouse.db.GoodsDBHelper;
+import com.carqi.warehouse.entity.BuyPersonEntity;
 import com.carqi.warehouse.entity.GoodsEntity;
 import com.carqi.warehouse.exception.ResponseException;
 import com.carqi.warehouse.impl.DataChangeListener;
@@ -45,10 +47,13 @@ public class AddInventoryActivity extends BaseActivity implements OnClickListene
 	private List<BasicInfoAdapter.Info> infoList;
 
 	private GoodsEntity goodsEntity = new GoodsEntity();
+	private BuyPersonEntity personEntity = new BuyPersonEntity();
 
 	private GoodsDBHelper goodsDbHelper;
-
+	private BuyPersonDBHelper buyPersonDBHelper;
 	private Context context;
+	
+	private int buyPersonCount;
 	private ResponseException responseException;
 
 	@Override
@@ -70,6 +75,8 @@ public class AddInventoryActivity extends BaseActivity implements OnClickListene
 		rightBtn = (ImageView) this.findViewById(R.id.RIGHT_BUTTON);
 		baseInfoLayout = (LinearLayout) this.findViewById(R.id.rent_base_info);
 
+		buyPersonDBHelper = new BuyPersonDBHelper(context);
+		buyPersonCount = buyPersonDBHelper.searchBuyPersonCount();
 		displayClientInfo();
 		refreshClientInfo();
 	}
@@ -92,9 +99,12 @@ public class AddInventoryActivity extends BaseActivity implements OnClickListene
 		infoList.add(new BasicInfoAdapter.Info("类　　型", BaseInfoWidget.SELECTION_TYPE, AppConfig.goodsType[0]));
 		infoList.add(new BasicInfoAdapter.Info("单　　价", BaseInfoWidget.SIMPLETEXT_TYPE));
 		infoList.add(new BasicInfoAdapter.Info("购买数量", BaseInfoWidget.SIMPLETEXT_TYPE, InputType.TYPE_CLASS_NUMBER));
-
 		infoList.add(new BasicInfoAdapter.Info("总  金  额", BaseInfoWidget.SIMPLETEXT_TYPE));
-		infoList.add(new BasicInfoAdapter.Info("采  购  人", BaseInfoWidget.SELECTION_TYPE));
+		if(buyPersonCount>0){
+			infoList.add(new BasicInfoAdapter.Info("采  购  人", BaseInfoWidget.SELECTION_TYPE));
+		}else{
+			infoList.add(new BasicInfoAdapter.Info("采  购  人", BaseInfoWidget.SIMPLETEXT_TYPE));
+		}
 		infoList.add(new BasicInfoAdapter.Info("供  应  商", BaseInfoWidget.SELECTION_TYPE));
 		infoList.add(new BasicInfoAdapter.Info("购买时间", BaseInfoWidget.SELECTION_TYPE));
 		infoList.add(new BasicInfoAdapter.Info("入库时间", BaseInfoWidget.SELECTION_TYPE));
@@ -138,7 +148,6 @@ public class AddInventoryActivity extends BaseActivity implements OnClickListene
 				item.setValue(totalMoney);
 				goodsEntity.setTotal_price(totalMoney);
 			}
-			
 		}
 		if (StringUtils.deleteBlank(key).equals("购买数量")) {
 			goodsEntity.setBuy_num(value);
@@ -148,10 +157,13 @@ public class AddInventoryActivity extends BaseActivity implements OnClickListene
 				item.setValue(totalMoney);
 				goodsEntity.setTotal_price(totalMoney);
 			}
-			
 		}
 		if (StringUtils.deleteBlank(key).equals("总金额")) {
 			goodsEntity.setTotal_price(value);
+		}
+
+		if (StringUtils.deleteBlank(key).equals("采购人")) {
+			personEntity.setName(value);
 		}
 	}
 
@@ -211,6 +223,7 @@ public class AddInventoryActivity extends BaseActivity implements OnClickListene
 	private void addGoods() {
 		goodsDbHelper = new GoodsDBHelper(context);
 		long result = goodsDbHelper.insert(goodsEntity);
+		buyPersonDBHelper.insert(personEntity);
 		if(result != -1){
 			ShowUtil.toast(context, "添加成功");
 			finish();

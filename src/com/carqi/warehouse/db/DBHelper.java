@@ -75,7 +75,7 @@ public class DBHelper {
 			CreateGoodsDb(db);
 			Log.i(TAG, "创建【货物表】成功");
 			CreateBuyPersonDb(db);
-			Log.i(TAG, "创建【求购客户表】成功");
+			Log.i(TAG, "创建【创建采购人信息表】成功");
 			CreateMemoRandumDB(db);
 			Log.i(TAG, "创建【备忘录表】成功");
 		}
@@ -126,7 +126,7 @@ public class DBHelper {
 		}
 		
 		/**
-		 * 创建购买人信息表
+		 * 创建采购人信息表
 		 * @author Administrator
 		 * 2014-1-29 下午10:52:12
 		 * @param db
@@ -135,9 +135,6 @@ public class DBHelper {
 			StringBuilder sb = new StringBuilder();
 			sb.append("CREATE TABLE ["+AppConfig.DB_BUY_PERSON_TABLE+"] (");
 			sb.append("[Id] INTEGER PRIMARY KEY AUTOINCREMENT, ");
-						
-			
-			sb.append("[clientId] INTEGER, ");
 			sb.append("[name] NVARCHAR(50) DEFAULT (''), ");
 			sb.append("[name_all_letter] VARCHAR DEFAULT (''), ");
 			sb.append("[name_first_letter] VARCHAR DEFAULT (''), ");
