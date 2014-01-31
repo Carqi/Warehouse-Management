@@ -26,11 +26,12 @@ import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.carqi.warehouse.R;
 import com.carqi.warehouse.adapter.BasicInfoAdapter;
 import com.carqi.warehouse.core.AppConfig;
+import com.carqi.warehouse.db.BuyPersonDBHelper;
+import com.carqi.warehouse.entity.BuyPersonEntity;
 import com.carqi.warehouse.exception.ResponseException;
 import com.carqi.warehouse.impl.DataChangeListener;
 import com.carqi.warehouse.impl.OnChangedListener;
@@ -52,7 +53,7 @@ public class BaseInfoWidget extends RelativeLayout implements OnClickListener{
 	public static final int PHONETEXT_TYPE = 5; //手机号码类型输入框
 	private String[] info;
 	
-	public Context context ;
+	public Context context;
 	public BasicInfoAdapter adapter;
 	public int position;
 	public TextView txtLabel;
@@ -73,11 +74,8 @@ public class BaseInfoWidget extends RelativeLayout implements OnClickListener{
 	public SlideButton on_and_off;
 	private int type;
 	private SharedPreferences sharedPreference;
-	private String PHPSESSID;
-	private List<Map<String, String>> districtList = null;
-	private List<Map<String, String>> aroundList = null;
 	private List<NameValuePair> param = null;
-	private List<Map<String, String>> cellList = null;
+	private List<BuyPersonEntity> buyPersonList;
 	private List<Map<String, String>> configList = null;
 	private ResponseException responseException;
 	private String configType;
@@ -112,7 +110,6 @@ public class BaseInfoWidget extends RelativeLayout implements OnClickListener{
 		editAreaLayout = (LinearLayout) findViewById(R.id.edit_area_layout);
 		editAreaValue = (EditText) findViewById(R.id.edit_area_value);
 		sharedPreference = context.getSharedPreferences("loginok", 0);
-		PHPSESSID = sharedPreference.getString("sessionid", "");
 		
 		setEdit();
 		
@@ -268,7 +265,14 @@ public class BaseInfoWidget extends RelativeLayout implements OnClickListener{
 			info = AppConfig.goodsType;
 			showDialog(info);
 		}else if("采购人".equals(StringUtils.deleteBlank(adapter.infoList.get(position).key))){
-			info = AppConfig.houseConfi;
+			BuyPersonDBHelper buyPersonDBhelper = new BuyPersonDBHelper(context);
+			buyPersonList = buyPersonDBhelper.getBuyPersonList();
+			int size = buyPersonList.size();
+			info = new String[size];
+			for(int i=0;i<size;i++){
+				info[i] = buyPersonList.get(i).getName();
+			}
+			buyPersonDBhelper.dbClose();
 			showDialog(info);
 			
 			
@@ -308,6 +312,7 @@ public class BaseInfoWidget extends RelativeLayout implements OnClickListener{
 		
 	}
 	
+
 	public void setConfigType(String type){
 		this.configType = type;
 	}
@@ -335,8 +340,8 @@ public class BaseInfoWidget extends RelativeLayout implements OnClickListener{
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 					// TODO Auto-generated method stub
+					weak.get().dataModify(adapter.infoList.get(position).key, info[which], buyPersonList.get(which).getId());
 					txtValue.setText(info[which]);
-					weak.get().dataModify(adapter.infoList.get(position).key, info[which],""+(which+1));
 					dialog.dismiss();
 				}
 			});
@@ -345,25 +350,12 @@ public class BaseInfoWidget extends RelativeLayout implements OnClickListener{
 				
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
-					// TODO Auto-generated method stub
-					String selectedStr = ""; 
-					String configCode ="";
-                    for(int i=0; i<checkedId.length; i++) {
-                    	if(checkedId[i] == true) {  
-                    		if(i == 0){
-                        		selectedStr = info[i];
-                        		configCode = configList.get(i).get("id");
-                        	}else{
-                        		selectedStr = selectedStr + "," +info[i];
-                        		configCode = configCode + "," +configList.get(i).get("id");
-                        	}
-                        }
-                    }
-                    selectedStr = StringUtils.dealString(selectedStr, ",");
-                    configCode = StringUtils.dealString(configCode, ",");
-                    txtValue.setText(selectedStr);
-                    weak.get().dataModify(adapter.infoList.get(position).key, selectedStr,configCode);
-                 }
+					showAddPersonDialog();
+					dialog.dismiss();
+				
+				}
+
+				
 			});
 		}else{
 			int checkedItem = 0;
@@ -386,6 +378,41 @@ public class BaseInfoWidget extends RelativeLayout implements OnClickListener{
 		dialog.show();
 		
 	}
+	
+	private void showAddPersonDialog() {
+		LayoutInflater li=LayoutInflater.from(context);
+        //将R.layout.quake_details填充到Layout
+        View dialogAddPerson = li.inflate(R.layout.dialog_add_buy_person, null);
+		AlertDialog.Builder dialog = new AlertDialog.Builder(context);
+		dialog.setTitle("请输入短信内容");
+		dialog.setIcon(android.R.drawable.ic_dialog_alert);
+		final TextView msmtext = new TextView(context);
+		final EditText msmInfo = new EditText(context);
+		msmtext.setText("姓名");
+		msmInfo.setText("此处是默认输入内容");
+		dialog.setView(dialogAddPerson);
+		dialog.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				// TODO Auto-generated method stub
+				String strTemp = msmInfo.getText().toString();
+			}
+		});
+		
+		dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.dismiss();
+			}
+		});
+		
+		dialog.create();
+		dialog.show();
+	}
+	
+	
 	
 	//显示滑动式dialog
 	private void showWheelDialog(){

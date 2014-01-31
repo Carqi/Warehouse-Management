@@ -1,5 +1,8 @@
 package com.carqi.warehouse.db;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -52,5 +55,25 @@ public class BuyPersonDBHelper {
 		int num = cursor.getCount();
 		cursor.close();
 		return num;
+	}
+	/**
+	 * 获得采购人列表
+	 * @author Administrator
+	 * 2014-1-31 下午6:17:42
+	 * @return 采购人列表
+	 */
+	public List<BuyPersonEntity> getBuyPersonList(){
+		List<BuyPersonEntity> listBuyPerson = new ArrayList<BuyPersonEntity>();
+		String sql = "SELECT * FROM "+AppConfig.DB_BUY_PERSON_TABLE;
+		Cursor cursor = db.rawQuery(sql, null);
+		while(cursor != null && cursor.moveToNext()){
+			BuyPersonEntity entity = new BuyPersonEntity();
+			entity.setName(cursor.getString(cursor.getColumnIndex("name")));
+			entity.setTel(cursor.getString(cursor.getColumnIndex("tel")));
+			
+			listBuyPerson.add(entity);
+		}
+		cursor.close();
+		return listBuyPerson;
 	}
 }

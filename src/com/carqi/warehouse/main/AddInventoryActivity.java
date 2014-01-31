@@ -54,6 +54,7 @@ public class AddInventoryActivity extends BaseActivity implements OnClickListene
 	private Context context;
 	
 	private int buyPersonCount;
+	private List<BuyPersonEntity> buyPersonList;
 	private ResponseException responseException;
 
 	@Override
@@ -76,7 +77,7 @@ public class AddInventoryActivity extends BaseActivity implements OnClickListene
 		baseInfoLayout = (LinearLayout) this.findViewById(R.id.rent_base_info);
 
 		buyPersonDBHelper = new BuyPersonDBHelper(context);
-		buyPersonCount = buyPersonDBHelper.searchBuyPersonCount();
+		buyPersonList = buyPersonDBHelper.getBuyPersonList();
 		displayClientInfo();
 		refreshClientInfo();
 	}
@@ -100,7 +101,7 @@ public class AddInventoryActivity extends BaseActivity implements OnClickListene
 		infoList.add(new BasicInfoAdapter.Info("单　　价", BaseInfoWidget.SIMPLETEXT_TYPE));
 		infoList.add(new BasicInfoAdapter.Info("购买数量", BaseInfoWidget.SIMPLETEXT_TYPE, InputType.TYPE_CLASS_NUMBER));
 		infoList.add(new BasicInfoAdapter.Info("总  金  额", BaseInfoWidget.SIMPLETEXT_TYPE));
-		if(buyPersonCount>0){
+		if(buyPersonList.size()>0){
 			infoList.add(new BasicInfoAdapter.Info("采  购  人", BaseInfoWidget.SELECTION_TYPE));
 		}else{
 			infoList.add(new BasicInfoAdapter.Info("采  购  人", BaseInfoWidget.SIMPLETEXT_TYPE));
