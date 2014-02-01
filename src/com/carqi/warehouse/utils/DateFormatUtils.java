@@ -224,5 +224,17 @@ public class DateFormatUtils {
 		}
 		return 0;
     }
+    
+    public static String getFileName() {  
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");  
+        String date = format.format(new Date(System.currentTimeMillis()));  
+        return date; 
+    }  
+  
+    public static String getDateEN() {  
+        SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  
+        String date1 = format1.format(new Date(System.currentTimeMillis()));  
+        return date1;  
+    }  
 	
 }

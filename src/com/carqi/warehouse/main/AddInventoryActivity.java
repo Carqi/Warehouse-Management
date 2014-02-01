@@ -7,6 +7,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.InputType;
+import android.text.format.DateUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
@@ -14,7 +15,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.carqi.warehouse.R;
@@ -26,6 +26,7 @@ import com.carqi.warehouse.entity.BuyPersonEntity;
 import com.carqi.warehouse.entity.GoodsEntity;
 import com.carqi.warehouse.exception.ResponseException;
 import com.carqi.warehouse.impl.DataChangeListener;
+import com.carqi.warehouse.utils.DateFormatUtils;
 import com.carqi.warehouse.utils.ShowUtil;
 import com.carqi.warehouse.utils.StringUtils;
 import com.carqi.warehouse.widget.BaseInfoWidget;
@@ -53,9 +54,7 @@ public class AddInventoryActivity extends BaseActivity implements OnClickListene
 	private BuyPersonDBHelper buyPersonDBHelper;
 	private Context context;
 	
-	private int buyPersonCount;
 	private List<BuyPersonEntity> buyPersonList;
-	private ResponseException responseException;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -106,9 +105,9 @@ public class AddInventoryActivity extends BaseActivity implements OnClickListene
 		}else{
 			infoList.add(new BasicInfoAdapter.Info("采  购  人", BaseInfoWidget.SIMPLETEXT_TYPE));
 		}
-		infoList.add(new BasicInfoAdapter.Info("供  应  商", BaseInfoWidget.SELECTION_TYPE));
-		infoList.add(new BasicInfoAdapter.Info("购买时间", BaseInfoWidget.SELECTION_TYPE));
-		infoList.add(new BasicInfoAdapter.Info("入库时间", BaseInfoWidget.SELECTION_TYPE));
+		infoList.add(new BasicInfoAdapter.Info("供  应  商", BaseInfoWidget.SIMPLETEXT_TYPE));
+		infoList.add(new BasicInfoAdapter.Info("购买时间", BaseInfoWidget.SELECTION_TYPE, DateFormatUtils.getFileName()));
+		infoList.add(new BasicInfoAdapter.Info("入库时间", BaseInfoWidget.SELECTION_TYPE, DateFormatUtils.getFileName()));
 		infoList.add(new BasicInfoAdapter.Info("备　　注", BaseInfoWidget.TEXTAREA_TYPE));
 		adapter.setContentList(infoList);
 
@@ -164,6 +163,7 @@ public class AddInventoryActivity extends BaseActivity implements OnClickListene
 		}
 
 		if (StringUtils.deleteBlank(key).equals("采购人")) {
+			goodsEntity.setBuy_person(value);
 			personEntity.setName(value);
 		}
 	}
@@ -176,13 +176,6 @@ public class AddInventoryActivity extends BaseActivity implements OnClickListene
 		
 	}
 
-	private String[] spliteRentRange(String rentRangeValue) {
-		String[] temp = rentRangeValue.split("-");
-		return temp;
-
-	}
-
-	@SuppressWarnings("deprecation")
 	@Override
 	public void onClick(View v) {
 
@@ -212,6 +205,14 @@ public class AddInventoryActivity extends BaseActivity implements OnClickListene
 			ShowUtil.toast(context, "购买数量不能为空");
 			return;
 		}
+		if (StringUtils.isEmpty(entity.getTotal_price())) {
+			ShowUtil.toast(context, "总金额不能为空");
+			return;
+		}
+		if (StringUtils.isEmpty(entity.getBuy_person())) {
+			ShowUtil.toast(context, "采购人不能为空");
+			return;
+		}
 		if(StringUtils.isEmpty(entity.getType())){
 			infoWidget = (BaseInfoWidget) baseInfoLayout.findViewWithTag("类　　型");
 			String temp = infoWidget.getValue();
@@ -222,9 +223,10 @@ public class AddInventoryActivity extends BaseActivity implements OnClickListene
 	}
 
 	private void addGoods() {
+		goodsEntity.setBuy_personid(buyPersonDBHelper.insert(personEntity)+"");
+		
 		goodsDbHelper = new GoodsDBHelper(context);
 		long result = goodsDbHelper.insert(goodsEntity);
-		buyPersonDBHelper.insert(personEntity);
 		if(result != -1){
 			ShowUtil.toast(context, "添加成功");
 			finish();

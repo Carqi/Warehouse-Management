@@ -95,7 +95,7 @@ public class LogcatHelper {
 		public LogDumper(String pid, String dir) {
 			mPID = pid;
 			try {
-				File logFile = new File(dir, "JouhuWangJu-" + MyDate.getFileName() + ".log");
+				File logFile = new File(dir, "JouhuWangJu-" + DateFormatUtils.getFileName() + ".log");
 				if (!logFile.exists())
 					logFile.createNewFile();
 				out = new FileOutputStream(logFile, true);
@@ -138,7 +138,7 @@ public class LogcatHelper {
 						continue;
 					}
 					if (out != null && line.contains(mPID)) {
-						out.write((MyDate.getDateEN() + "  " + line + "\n").getBytes());
+						out.write((DateFormatUtils.getDateEN() + "  " + line + "\n").getBytes());
 					}
 				}
 

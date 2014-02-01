@@ -1,15 +1,19 @@
 package com.carqi.warehouse.widget;
 
 import java.lang.ref.WeakReference;
+import java.lang.reflect.Field;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.http.NameValuePair;
 
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
+import android.app.DatePickerDialog.OnDateSetListener;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
+import android.content.Intent;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.InputType;
@@ -18,6 +22,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -35,25 +40,25 @@ import com.carqi.warehouse.entity.BuyPersonEntity;
 import com.carqi.warehouse.exception.ResponseException;
 import com.carqi.warehouse.impl.DataChangeListener;
 import com.carqi.warehouse.impl.OnChangedListener;
+import com.carqi.warehouse.main.CalendarDialogActivity;
 import com.carqi.warehouse.utils.ShowUtil;
 import com.carqi.warehouse.utils.StringUtils;
 
-
- /**
- *  Class Name: BaseInfoWidget.java
- *  重写item
- *  @author Yu Liu  DateTime 2013-11-5 下午2:42:15    
+/**
+ * Class Name: BaseInfoWidget.java 重写item
+ * 
+ * @author Yu Liu DateTime 2013-11-5 下午2:42:15
  */
-public class BaseInfoWidget extends RelativeLayout implements OnClickListener{
-	//private static final String TAG = BaseInfoWidget.class.getSimpleName();
+public class BaseInfoWidget extends RelativeLayout implements OnClickListener {
+	// private static final String TAG = BaseInfoWidget.class.getSimpleName();
 	public static final int SELECTION_TYPE = 0; // 选择类型常量
 	public static final int SIMPLETEXT_TYPE = 1; // 编辑类型常量
 	public static final int RADIO_TYPE = 2; // 单选类型常量
 	public static final int TOGGLE_TYPE = 3; // 开关类型常量
 	public static final int TEXTAREA_TYPE = 4; // 编辑域类型常量
-	public static final int PHONETEXT_TYPE = 5; //手机号码类型输入框
+	public static final int PHONETEXT_TYPE = 5; // 手机号码类型输入框
 	private String[] info;
-	
+
 	public Context context;
 	public BasicInfoAdapter adapter;
 	public int position;
@@ -62,44 +67,42 @@ public class BaseInfoWidget extends RelativeLayout implements OnClickListener{
 	public TextView txtYuanLabel;
 	public ImageView imgArrow;
 	public EditText editValue;
-	public RelativeLayout textLayout ;
+	public RelativeLayout textLayout;
 	public RelativeLayout editLayout;
 	public RelativeLayout toggleLayout;
 	public RadioGroup radioGroup;
 	public RadioButton radioButton1;
 	public RadioButton radioButton2;
-	/*编辑域*/
+	/* 编辑域 */
 	public LinearLayout editAreaLayout;
 	public EditText editAreaValue;
 	public WeakReference<DataChangeListener> weak;
 	public SlideButton on_and_off;
 	private int type;
-	private SharedPreferences sharedPreference;
 	private List<NameValuePair> param = null;
 	private List<BuyPersonEntity> buyPersonList;
 	private List<Map<String, String>> configList = null;
 	private ResponseException responseException;
 	private String configType;
-	
+
 	private String clientNeed = "";
-	
-	
-	 /**
+
+	/**
 	 * @param context
 	 */
-	public BaseInfoWidget(Context _context,int type, int inputType) {
+	public BaseInfoWidget(Context _context, int type, int inputType) {
 		super(_context);
 		this.context = _context;
 		this.type = type;
 		this.weak = new WeakReference<DataChangeListener>((DataChangeListener) _context);
 		LayoutInflater inflater = (LayoutInflater) _context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		inflater.inflate(R.layout.item_layout, this);
-		
+
 		txtLabel = (TextView) findViewById(R.id.txt_label);
 		txtValue = (TextView) findViewById(R.id.txt_value);
 		txtYuanLabel = (TextView) findViewById(R.id.yuan_label);
 		editValue = (EditText) findViewById(R.id.edit_value);
-		imgArrow = (ImageView)findViewById(R.id.img_arrow_down);
+		imgArrow = (ImageView) findViewById(R.id.img_arrow_down);
 		textLayout = (RelativeLayout) findViewById(R.id.text_layout);
 		editLayout = (RelativeLayout) findViewById(R.id.edit_layout);
 		toggleLayout = (RelativeLayout) findViewById(R.id.toggle_layout);
@@ -107,29 +110,28 @@ public class BaseInfoWidget extends RelativeLayout implements OnClickListener{
 		radioButton1 = (RadioButton) findViewById(R.id.radio_button1);
 		radioButton2 = (RadioButton) findViewById(R.id.radio_button2);
 		on_and_off = (SlideButton) findViewById(R.id.on_and_off);
-		
+
 		editAreaLayout = (LinearLayout) findViewById(R.id.edit_area_layout);
 		editAreaValue = (EditText) findViewById(R.id.edit_area_value);
-		sharedPreference = context.getSharedPreferences("loginok", 0);
-		
+
 		setEdit();
-		
-		if(type == PHONETEXT_TYPE){
+
+		if (type == PHONETEXT_TYPE) {
 			editValue.setInputType(InputType.TYPE_CLASS_PHONE);
-			editValue.setFilters(new InputFilter[]{new InputFilter.LengthFilter(11)});
+			editValue.setFilters(new InputFilter[] { new InputFilter.LengthFilter(11) });
 		}
-		
-		if(inputType == InputType.TYPE_CLASS_NUMBER){
+
+		if (inputType == InputType.TYPE_CLASS_NUMBER) {
 			editValue.setInputType(InputType.TYPE_CLASS_NUMBER);
-			editValue.setFilters(new InputFilter[]{new InputFilter.LengthFilter(9)});
-			
+			editValue.setFilters(new InputFilter[] { new InputFilter.LengthFilter(9) });
+
 		}
-		
+
 	}
-	
-	private void setEdit(){
-		
-		switch (type){
+
+	private void setEdit() {
+
+		switch (type) {
 		case SELECTION_TYPE:
 			editLayout.setVisibility(View.GONE);
 			editAreaLayout.setVisibility(View.GONE);
@@ -164,17 +166,18 @@ public class BaseInfoWidget extends RelativeLayout implements OnClickListener{
 			textLayout.setVisibility(View.GONE);
 			toggleLayout.setVisibility(View.GONE);
 			radioGroup.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-				
+
 				@Override
 				public void onCheckedChanged(RadioGroup group, int checkedId) {
-					if(checkedId == radioButton1.getId()){
+					if (checkedId == radioButton1.getId()) {
 						radioGroup.setTag(1);
-					}else if(checkedId == radioButton2.getId()){
+					} else if (checkedId == radioButton2.getId()) {
 						radioGroup.setTag(2);
 					}
-					
-					weak.get().dataModify(adapter.infoList.get(position).key, String.valueOf(radioGroup.getTag()),null);
-					
+
+					weak.get()
+							.dataModify(adapter.infoList.get(position).key, String.valueOf(radioGroup.getTag()), null);
+
 				}
 			});
 			break;
@@ -184,137 +187,112 @@ public class BaseInfoWidget extends RelativeLayout implements OnClickListener{
 			textLayout.setVisibility(View.GONE);
 			radioGroup.setVisibility(View.GONE);
 			on_and_off.SetOnChangedListener(new OnChangedListener() {
-				
+
 				@Override
 				public void OnChanged(boolean checkState) {
 					// TODO Auto-generated method stub
-					//checkState为true时代表否，false时代表是
-					if(checkState){
-						weak.get().dataModify(adapter.infoList.get(position).key, String.valueOf(false),null);
-					}else{
-						weak.get().dataModify(adapter.infoList.get(position).key, String.valueOf(true),null);
+					// checkState为true时代表否，false时代表是
+					if (checkState) {
+						weak.get().dataModify(adapter.infoList.get(position).key, String.valueOf(false), null);
+					} else {
+						weak.get().dataModify(adapter.infoList.get(position).key, String.valueOf(true), null);
 					}
-					
+
 				}
 			});
 			break;
 		}
 	}
-	
-	public void setKey(String key){
+
+	public void setKey(String key) {
 		txtLabel.setText(key);
 	}
-	
-	public void setValue(String value){
+
+	public void setValue(String value) {
 		txtValue.setText(value);
 		editValue.setText(value);
 		editAreaValue.setText(value);
-		if(value != null){
-			if(value.equals("2")){
+		if (value != null) {
+			if (value.equals("2")) {
 				radioGroup.check(radioButton2.getId());
-			}else{
+			} else {
 				radioGroup.check(radioButton1.getId());
 			}
-			//设置开关默认显示
-			if(value.equals("1")){
+			// 设置开关默认显示
+			if (value.equals("1")) {
 				on_and_off.setState(true);
-			}else{
+			} else {
 				on_and_off.setState(false);
 			}
 		}
-			
-		
-		
-		
-		
+
 	}
-	public String getValue(){
+
+	public String getValue() {
 		return txtValue.getText().toString();
 	}
-	
-	
-	//监听EditText中数据改变
+
+	// 监听EditText中数据改变
 	public TextWatcher watcher = new TextWatcher() {
-		
+
 		@Override
 		public void onTextChanged(CharSequence s, int start, int before, int count) {
 		}
-		
+
 		@Override
-		public void beforeTextChanged(CharSequence s, int start, int count,
-				int after) {
+		public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 		}
-		
+
 		@Override
 		public void afterTextChanged(Editable s) {
 			// TODO Auto-generated method stub
 			BasicInfoAdapter.Info info = adapter.infoList.get(position);
 			Log.d("BaseInfoWidget", info.key + "*********" + s.toString());
-			weak.get().dataModify(info.key, s.toString(),null);
-			
+			weak.get().dataModify(info.key, s.toString(), null);
+
 		}
 	};
-	
-	
-	 /* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see android.view.View.OnClickListener#onClick(android.view.View)
 	 */
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
-		if("类型".equals(StringUtils.deleteBlank(adapter.infoList.get(position).key))){
+		if ("类型".equals(StringUtils.deleteBlank(adapter.infoList.get(position).key))) {
 			info = AppConfig.goodsType;
 			showDialog(info);
-		}else if("采购人".equals(StringUtils.deleteBlank(adapter.infoList.get(position).key))){
+		} else if ("采购人".equals(StringUtils.deleteBlank(adapter.infoList.get(position).key))) {
 			BuyPersonDBHelper buyPersonDBhelper = new BuyPersonDBHelper(context);
 			buyPersonList = buyPersonDBhelper.getBuyPersonList();
 			int size = buyPersonList.size();
 			info = new String[size];
-			for(int i=0;i<size;i++){
+			for (int i = 0; i < size; i++) {
 				info[i] = buyPersonList.get(i).getName();
 			}
 			buyPersonDBhelper.dbClose();
 			showDialog(info);
-			
-			
-		}else if("出租方式".equals(StringUtils.deleteBlank(adapter.infoList.get(position).key))){
-			info = AppConfig.rentType;
-			showDialog(info);
-		}else if("付款方式".equals(StringUtils.deleteBlank(adapter.infoList.get(position).key))){
-			info = AppConfig.payforType;
-			showDialog(info);
-		}else if("客户来源".equals(StringUtils.deleteBlank(adapter.infoList.get(position).key))){
-			info = AppConfig.clientResource;
-			showDialog(info);
-		}else if("租金范围".equals(StringUtils.deleteBlank(adapter.infoList.get(position).key))){
-			if(clientNeed.equals("client_module")){
-				info = AppConfig.rentRangeNoAll;
-			}else{
-				info = AppConfig.rentRange;
-			}
-			showDialog(info);
-		}else if("价格".equals(StringUtils.deleteBlank(adapter.infoList.get(position).key))){
-			if(clientNeed.equals("client_module")){
-				info = AppConfig.sellRangeNoAll;
-			}else{
-				info = AppConfig.sellRange;
-			}
-			showDialog(info);
-		}else if("面积".equals(StringUtils.deleteBlank(adapter.infoList.get(position).key))){
-			if(clientNeed.equals("client_module")){
+
+		} else if ("购买时间".equals(StringUtils.deleteBlank(adapter.infoList.get(position).key))) {
+			showDateDialog();
+		} else if ("入库时间".equals(StringUtils.deleteBlank(adapter.infoList.get(position).key))) {
+			showDateDialog();
+		} else if ("面积".equals(StringUtils.deleteBlank(adapter.infoList.get(position).key))) {
+			if (clientNeed.equals("client_module")) {
 				info = AppConfig.areaNoAll;
-			}else{
+			} else {
 				info = AppConfig.area;
 			}
 			showDialog(info);
-		}else {
+		} else {
 			showWheelDialog();
 		}
-		
-	}
-	
 
-	public void setConfigType(String type){
+	}
+
+	public void setConfigType(String type) {
 		this.configType = type;
 	}
 
@@ -322,18 +300,18 @@ public class BaseInfoWidget extends RelativeLayout implements OnClickListener{
 		this.clientNeed = clientNeed;
 	}
 
-	//显示dialog
-	private void showDialog(final String[] info){
+	// 显示dialog
+	private void showDialog(final String[] info) {
 		int length = info.length;
 		final boolean[] checkedId = new boolean[length];
 		AlertDialog.Builder dialog = new AlertDialog.Builder(context);
 		dialog.setIcon(android.R.drawable.ic_dialog_info);
 		dialog.setTitle(adapter.infoList.get(position).key);
-		if("采购人".equals(StringUtils.deleteBlank(adapter.infoList.get(position).key))){
-			
+		if ("采购人".equals(StringUtils.deleteBlank(adapter.infoList.get(position).key))) {
+
 			int checkedItem = 0;
-			for(int i=0;i < length;i++){
-				if(txtValue.getText().toString().equals(info[i])){
+			for (int i = 0; i < length; i++) {
+				if (txtValue.getText().toString().equals(info[i])) {
 					checkedItem = i;
 				}
 			}
@@ -341,27 +319,27 @@ public class BaseInfoWidget extends RelativeLayout implements OnClickListener{
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 					// TODO Auto-generated method stub
-					weak.get().dataModify(adapter.infoList.get(position).key, info[which], buyPersonList.get(which).getId());
+					weak.get().dataModify(adapter.infoList.get(position).key, info[which],
+							buyPersonList.get(which).getId());
 					txtValue.setText(info[which]);
 					dialog.dismiss();
 				}
 			});
-			
+
 			dialog.setPositiveButton("添 加", new DialogInterface.OnClickListener() {
-				
+
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 					showAddPersonDialog();
 					dialog.dismiss();
-				
+
 				}
 
-				
 			});
-		}else{
+		} else {
 			int checkedItem = 0;
-			for(int i=0;i < length;i++){
-				if(txtValue.getText().toString().equals(info[i])){
+			for (int i = 0; i < length; i++) {
+				if (txtValue.getText().toString().equals(info[i])) {
 					checkedItem = i;
 				}
 			}
@@ -370,67 +348,119 @@ public class BaseInfoWidget extends RelativeLayout implements OnClickListener{
 				public void onClick(DialogInterface dialog, int which) {
 					// TODO Auto-generated method stub
 					txtValue.setText(info[which]);
-					weak.get().dataModify(adapter.infoList.get(position).key, info[which],""+(which+1));
+					weak.get().dataModify(adapter.infoList.get(position).key, info[which], "" + (which + 1));
 					dialog.dismiss();
 				}
 			});
 		}
 		dialog.create();
 		dialog.show();
-		
+
 	}
-	
+
+	private void showDateDialog() {
+		Calendar calendar = Calendar.getInstance();
+		DatePickerDialog dialog = new DatePickerDialog(context, new MyOnDateSetListener(), calendar.get(Calendar.YEAR),
+				calendar.get(Calendar.MONTH), calendar.get(Calendar.DATE));
+		dialog.setIcon(android.R.drawable.ic_dialog_info);
+		dialog.setTitle(adapter.infoList.get(position).key);
+
+		// dialog.
+		dialog.show();
+
+	}
+
 	private void showAddPersonDialog() {
-		LayoutInflater li=LayoutInflater.from(context);
-        //将R.layout.quake_details填充到Layout
-        View dialogAddPerson = li.inflate(R.layout.dialog_add_buy_person, null);
+		LayoutInflater li = LayoutInflater.from(context);
+		// 将R.layout.quake_details填充到Layout
+		View dialogAddPerson = li.inflate(R.layout.dialog_add_buy_person, null);
 		AlertDialog.Builder dialog = new AlertDialog.Builder(context);
+
 		dialog.setTitle("添加采购人");
 		dialog.setIcon(android.R.drawable.ic_dialog_alert);
 		final EditText name = (EditText) dialogAddPerson.findViewById(R.id.name);
 		final EditText tel = (EditText) dialogAddPerson.findViewById(R.id.tel);
 		dialog.setView(dialogAddPerson);
 		dialog.setPositiveButton("确认", new DialogInterface.OnClickListener() {
-			
+
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
+
 				String nameStr = name.getText().toString();
 				String telStr = tel.getText().toString();
-				BuyPersonDBHelper buyPersonDBhelper = new BuyPersonDBHelper(context);
-				long result = buyPersonDBhelper.insert(nameStr, telStr);
-				if(result>0){
-					txtValue.setText(nameStr);
-					ShowUtil.toast(context, "添加成功");
-				}else{
-					ShowUtil.toast(context, "添加失败");
+				if (nameStr.equals("")) {
+					ShowUtil.toast(context, "姓名不能为空");
+
+					try {
+						Field field = dialog.getClass().getSuperclass().getDeclaredField("mShowing");
+						field.setAccessible(true);
+						field.set(dialog, false);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				} else {
+					BuyPersonDBHelper buyPersonDBhelper = new BuyPersonDBHelper(context);
+					long result = buyPersonDBhelper.insert(nameStr, telStr);
+					if (result > 0) {
+						txtValue.setText(nameStr);
+						ShowUtil.toast(context, "添加采购人成功");
+						try {
+							Field field = dialog.getClass().getSuperclass().getDeclaredField("mShowing");
+							field.setAccessible(true);
+							field.set(dialog, true);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					} else {
+						ShowUtil.toast(context, "添加采购人失败");
+					}
 				}
+
 			}
 		});
-		
+
 		dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-			
+
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
+				try {
+					Field field = dialog.getClass().getSuperclass().getDeclaredField("mShowing");
+					field.setAccessible(true);
+					field.set(dialog, true);
+					} catch (Exception e) {
+					e.printStackTrace();
+					}
 				dialog.dismiss();
 			}
 		});
-		
+
 		dialog.create();
 		dialog.show();
 	}
-	
-	
-	
-	//显示滑动式dialog
-	private void showWheelDialog(){
-		
+
+	// 显示滑动式dialog
+	private void showWheelDialog() {
+
 	}
-	
-	
-	
-	public void setYuanVisibel(String text){
+
+	public void setYuanVisibel(String text) {
 		txtYuanLabel.setVisibility(View.VISIBLE);
 		txtYuanLabel.setText(text);
 	}
-	
+
+	/**
+	 * 设置日历时间
+	 * 
+	 * @author Administrator 2014-2-1 下午6:04:07
+	 */
+	private final class MyOnDateSetListener implements OnDateSetListener {
+
+		public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+			String mm = monthOfYear <= 8 ? "0" + (monthOfYear + 1) : String.valueOf(monthOfYear + 1);
+			String dd = dayOfMonth <= 9 ? "0" + dayOfMonth : String.valueOf(dayOfMonth);
+			Log.i("BaseInfoWidget", "时间----------->" + String.valueOf(year) + "-" + mm + "-" + dd);
+			txtValue.setText(String.valueOf(year) + "-" + mm + "-" + dd);
+		}
+	}
+
 }

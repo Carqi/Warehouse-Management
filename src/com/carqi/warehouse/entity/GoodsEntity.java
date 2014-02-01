@@ -28,6 +28,8 @@ public class GoodsEntity implements Serializable {
 	private String total_price;
 	/* 购买人id*/
 	private String buy_personid;
+	/* 购买人*/
+	private String buy_person;
 	/* 供应商id*/
 	private String supplierid;
 	/* 购买时间*/
@@ -115,6 +117,12 @@ public class GoodsEntity implements Serializable {
 	}
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+	public String getBuy_person() {
+		return buy_person;
+	}
+	public void setBuy_person(String buy_person) {
+		this.buy_person = buy_person;
 	}
 	
 	
