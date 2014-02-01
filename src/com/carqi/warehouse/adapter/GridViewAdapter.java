@@ -56,7 +56,7 @@ public class GridViewAdapter extends BaseAdapter {
 			viewHolder.itemText = (TextView) convertView.findViewById(R.id.ItemText);
 		}
 
-		viewHolder.itemImage.setBackgroundResource(R.drawable.ic_launcher);
+		viewHolder.itemImage.setBackgroundResource(entity.getDrawable());
 		viewHolder.itemText.setText(entity.getText());
 		convertView.setTag(viewHolder);
 		return convertView;

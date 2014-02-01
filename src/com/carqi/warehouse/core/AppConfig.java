@@ -13,7 +13,7 @@ import android.util.Log;
  */
 public class AppConfig {
 	public static String[] HomeItem = new String[]{"货物库存", "进货入库","工具管理","商品退货","导出Excel", "流水日志"};
-	public static int[] HomeItemImage = {R.drawable.ic_launcher,R.drawable.ic_launcher,R.drawable.ic_launcher,R.drawable.ic_launcher,R.drawable.ic_launcher,R.drawable.ic_launcher};
+	public static int[] HomeItemImage = {R.drawable.inventory,R.drawable.add_inventory,R.drawable.tools,R.drawable.return_of_goods,R.drawable.export_excel,R.drawable.log};
 	public static String[] ori = new String[] { "东", "南", "西", "北", "东南", "西南", "西北","东北", "南北", "东西" };
 	public static String[] decorate = new String[] { "毛坯房", "普通装修", "精装修", "豪华装修" };
 	public static String[] goodsType = new String[] { "工具", "消耗品" };
