@@ -44,6 +44,19 @@ public class BuyPersonDBHelper {
 			return db.insert(AppConfig.DB_BUY_PERSON_TABLE, null, contentValues);		
 	}
 	/**
+	 * 插入
+	 * 
+	 * @param list
+	 */
+	public long insert(String name, String tel) {
+			ContentValues contentValues = new ContentValues();
+
+			contentValues.put("name", name);
+			contentValues.put("tel", tel);
+			return db.insert(AppConfig.DB_BUY_PERSON_TABLE, null, contentValues);		
+	}
+	
+	/**
 	 * 查询求购人数量
 	 * @author Administrator
 	 * 2014-1-30 下午5:40:24

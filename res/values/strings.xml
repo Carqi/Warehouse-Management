@@ -9,6 +9,8 @@
     <string name="file">文件</string>
     <string name="setting">设置</string>
     <string name="yuan">元</string>
+    <string name="name">姓 名</string>
+    <string name="tel">电 话</string>
 
     
     <string-array name="status_codes">

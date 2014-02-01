@@ -35,6 +35,7 @@ import com.carqi.warehouse.entity.BuyPersonEntity;
 import com.carqi.warehouse.exception.ResponseException;
 import com.carqi.warehouse.impl.DataChangeListener;
 import com.carqi.warehouse.impl.OnChangedListener;
+import com.carqi.warehouse.utils.ShowUtil;
 import com.carqi.warehouse.utils.StringUtils;
 
 
@@ -384,19 +385,25 @@ public class BaseInfoWidget extends RelativeLayout implements OnClickListener{
         //将R.layout.quake_details填充到Layout
         View dialogAddPerson = li.inflate(R.layout.dialog_add_buy_person, null);
 		AlertDialog.Builder dialog = new AlertDialog.Builder(context);
-		dialog.setTitle("请输入短信内容");
+		dialog.setTitle("添加采购人");
 		dialog.setIcon(android.R.drawable.ic_dialog_alert);
-		final TextView msmtext = new TextView(context);
-		final EditText msmInfo = new EditText(context);
-		msmtext.setText("姓名");
-		msmInfo.setText("此处是默认输入内容");
+		final EditText name = (EditText) dialogAddPerson.findViewById(R.id.name);
+		final EditText tel = (EditText) dialogAddPerson.findViewById(R.id.tel);
 		dialog.setView(dialogAddPerson);
 		dialog.setPositiveButton("确认", new DialogInterface.OnClickListener() {
 			
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				// TODO Auto-generated method stub
-				String strTemp = msmInfo.getText().toString();
+				String nameStr = name.getText().toString();
+				String telStr = tel.getText().toString();
+				BuyPersonDBHelper buyPersonDBhelper = new BuyPersonDBHelper(context);
+				long result = buyPersonDBhelper.insert(nameStr, telStr);
+				if(result>0){
+					txtValue.setText(nameStr);
+					ShowUtil.toast(context, "添加成功");
+				}else{
+					ShowUtil.toast(context, "添加失败");
+				}
 			}
 		});
 		
