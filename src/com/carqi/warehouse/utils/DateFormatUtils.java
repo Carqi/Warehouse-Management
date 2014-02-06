@@ -7,12 +7,9 @@ import java.util.Date;
 import android.annotation.SuppressLint;
 
 /**
- * 
- *  Class Name: DateFormatUtils.java
- *  时间util
- *  @author Yu Liu  DateTime 2013-10-26 上午9:24:28    
- *  @version 1.0
- *  @company 长春优狐科技开发有限公司
+ * 时间工具类
+ * @author Administrator
+ * 2014-2-6 下午7:12:20
  */
 
 @SuppressLint("SimpleDateFormat")
@@ -122,6 +119,13 @@ public class DateFormatUtils {
 			return String.valueOf(date.getTime());
 		}
 	}
+	/**
+	 * 将日期格式转化为时间戳形式
+	 * @author Administrator
+	 * 2014-2-6 下午7:14:20
+	 * @param dateString
+	 * @return
+	 */
 	public static String parseDateToLongString(String dateString) {
 		if (StringUtils.isEmpty(dateString)) {
 			return "";
@@ -133,7 +137,13 @@ public class DateFormatUtils {
 			return String.valueOf(dateLong);
 		}
 	}
-	
+	/**
+	 * 将YYYY_MM_DD时间格式转换成时间戳格式
+	 * @author Administrator
+	 * 2014-2-6 下午7:26:41
+	 * @param dateString
+	 * @return
+	 */
 	public static long parseDateToLong2(String dateString){
 		SimpleDateFormat sdf = new SimpleDateFormat(FORMAT_DATE_YYYY_MM_DD);
 		Date date;

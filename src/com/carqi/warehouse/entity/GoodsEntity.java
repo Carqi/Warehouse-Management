@@ -10,6 +10,7 @@ import java.io.Serializable;
 public class GoodsEntity implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
+	private int id;
 	/* 货品名称*/
 	private String name;
 	/* 货品型号*/
@@ -40,6 +41,12 @@ public class GoodsEntity implements Serializable {
 	private String remark;
 	
 	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public String getName() {
 		return name;
 	}

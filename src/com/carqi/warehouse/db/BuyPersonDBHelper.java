@@ -81,6 +81,7 @@ public class BuyPersonDBHelper {
 		Cursor cursor = db.rawQuery(sql, null);
 		while(cursor != null && cursor.moveToNext()){
 			BuyPersonEntity entity = new BuyPersonEntity();
+			entity.setId(cursor.getString(cursor.getColumnIndex("Id")));
 			entity.setName(cursor.getString(cursor.getColumnIndex("name")));
 			entity.setTel(cursor.getString(cursor.getColumnIndex("tel")));
 			

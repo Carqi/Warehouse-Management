@@ -7,7 +7,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.InputType;
-import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
@@ -24,7 +24,6 @@ import com.carqi.warehouse.db.BuyPersonDBHelper;
 import com.carqi.warehouse.db.GoodsDBHelper;
 import com.carqi.warehouse.entity.BuyPersonEntity;
 import com.carqi.warehouse.entity.GoodsEntity;
-import com.carqi.warehouse.exception.ResponseException;
 import com.carqi.warehouse.impl.DataChangeListener;
 import com.carqi.warehouse.utils.DateFormatUtils;
 import com.carqi.warehouse.utils.ShowUtil;
@@ -151,6 +150,7 @@ public class AddInventoryActivity extends BaseActivity implements OnClickListene
 		}
 		if (StringUtils.deleteBlank(key).equals("购买数量")) {
 			goodsEntity.setBuy_num(value);
+			goodsEntity.setNow_num(value);
 			if((goodsEntity.getUnit_price()!=null && !goodsEntity.getUnit_price().equals("")) && (goodsEntity.getBuy_num()!=null && !goodsEntity.getBuy_num().equals(""))){
 				String totalMoney = getTotalMoney(goodsEntity);
 				item = (BaseInfoWidget) baseInfoLayout.findViewWithTag("总  金  额");
@@ -165,6 +165,17 @@ public class AddInventoryActivity extends BaseActivity implements OnClickListene
 		if (StringUtils.deleteBlank(key).equals("采购人")) {
 			goodsEntity.setBuy_person(value);
 			personEntity.setName(value);
+			if(code != null){
+				Log.i(TAG, "采购人：code-------------->"+code);
+				goodsEntity.setBuy_personid(code);
+			}
+		}
+		if (StringUtils.deleteBlank(key).equals("购买时间")) {
+			Log.i(TAG, "buy_date-------------->"+value);
+			goodsEntity.setBuy_date(code);
+		}
+		if (StringUtils.deleteBlank(key).equals("入库时间")) {
+			goodsEntity.setIn_date(value);
 		}
 	}
 
@@ -218,15 +229,30 @@ public class AddInventoryActivity extends BaseActivity implements OnClickListene
 			String temp = infoWidget.getValue();
 			goodsEntity.setType(temp);
 		}
+		if(StringUtils.isEmpty(entity.getBuy_date())){
+			infoWidget = (BaseInfoWidget) baseInfoLayout.findViewWithTag("购买时间");
+			String temp = infoWidget.getValue();
+			goodsEntity.setBuy_date(DateFormatUtils.parseDateToLong2(temp)+"");
+		}
+
+		if(StringUtils.isEmpty(entity.getIn_date())){
+			infoWidget = (BaseInfoWidget) baseInfoLayout.findViewWithTag("入库时间");
+			String temp = infoWidget.getValue();
+			goodsEntity.setIn_date(DateFormatUtils.parseDateToLong2(temp)+"");
+		}
 		addGoods();
 
 	}
 
 	private void addGoods() {
-		goodsEntity.setBuy_personid(buyPersonDBHelper.insert(personEntity)+"");
+		if(StringUtils.isEmpty(goodsEntity.getBuy_personid())){
+			goodsEntity.setBuy_personid(buyPersonDBHelper.insert(personEntity)+"");
+		}
 		
 		goodsDbHelper = new GoodsDBHelper(context);
 		long result = goodsDbHelper.insert(goodsEntity);
+		buyPersonDBHelper.dbClose();
+		goodsDbHelper.dbClose();
 		if(result != -1){
 			ShowUtil.toast(context, "添加成功");
 			finish();
@@ -260,18 +286,6 @@ public class AddInventoryActivity extends BaseActivity implements OnClickListene
 				scroll.scrollTo(0, offset);
 			}
 		});
-	}
-
-	// 去除字符串List中含有default的字符串
-	private ArrayList<String> getIntentArrayList(ArrayList<String> dataList) {
-
-		ArrayList<String> tDataList = new ArrayList<String>();
-		for (String s : dataList) {
-			if (!s.contains("default")) {
-				tDataList.add(s);
-			}
-		}
-		return tDataList;
 	}
 
 	@Override

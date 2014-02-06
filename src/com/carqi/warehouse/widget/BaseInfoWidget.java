@@ -41,6 +41,7 @@ import com.carqi.warehouse.exception.ResponseException;
 import com.carqi.warehouse.impl.DataChangeListener;
 import com.carqi.warehouse.impl.OnChangedListener;
 import com.carqi.warehouse.main.CalendarDialogActivity;
+import com.carqi.warehouse.utils.DateFormatUtils;
 import com.carqi.warehouse.utils.ShowUtil;
 import com.carqi.warehouse.utils.StringUtils;
 
@@ -458,8 +459,11 @@ public class BaseInfoWidget extends RelativeLayout implements OnClickListener {
 		public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 			String mm = monthOfYear <= 8 ? "0" + (monthOfYear + 1) : String.valueOf(monthOfYear + 1);
 			String dd = dayOfMonth <= 9 ? "0" + dayOfMonth : String.valueOf(dayOfMonth);
-			Log.i("BaseInfoWidget", "时间----------->" + String.valueOf(year) + "-" + mm + "-" + dd);
-			txtValue.setText(String.valueOf(year) + "-" + mm + "-" + dd);
+			String date = String.valueOf(year) + "-" + mm + "-" + dd;
+			Log.i("BaseInfoWidget", "时间----------->" + date);
+			weak.get().dataModify(adapter.infoList.get(position).key, date, ""+DateFormatUtils.parseDateToLong2(date));
+			
+			txtValue.setText(date);
 		}
 	}
 
